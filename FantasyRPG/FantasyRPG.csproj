@@ -47,7 +47,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="CharacterClass.cs" />
     <Compile Include="Dice.cs" />
-    <Compile Include="Fighter.cs" />
+    <Compile Include="CharacterClasses\Fighter.cs" />
     <Compile Include="FightScreen.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Input.cs" />
@@ -55,12 +55,12 @@
     <Compile Include="NPC.cs" />
     <Compile Include="Party.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Priest.cs" />
+    <Compile Include="CharacterClasses\Priest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="ScreenTemplate.cs" />
-    <Compile Include="Wizard.cs" />
+    <Compile Include="CharacterClasses\Wizard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

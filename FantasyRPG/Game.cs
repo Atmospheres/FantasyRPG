@@ -12,19 +12,36 @@ namespace FantasyRPG
         Party enemyParty = new Party();
         Battle battle = new Battle();
         Screen screen = new Screen();
-        
+
         public void StartGame()
         {
             mainParty.SetupParty();
             enemyParty.SetupParty();
             screen.PolulateMainPartyInfo(mainParty);
-            //    battle.BattleSetup(mainParty, enemyParty);
-            //   screen.PassBattleInfo(mainParty, enemyParty);
-            screen.fightScreen.PopulateFightScreen(screen.screenTemplate);
-            screen.fightScreen.AddEnemyInfo(enemyParty);
-            screen.fightScreen.PopulateSubNames(mainParty);
-            screen.fightScreen.PrintFightScreen();
-            
+            StartBattle();
+        }
+
+        public void StartBattle()
+        {
+            FightScreen.PopulateFightScreen(screen.screenTemplate);
+            FightScreen.AddEnemyInfo(enemyParty);
+            FightScreen.PopulateSubNames(mainParty);
+            FightScreen.PrintFightScreen();
+            battle.BattleSetup(mainParty, enemyParty);
+            while ((battle.mainParty.characterList[0].health + battle.mainParty.characterList[1].health + battle.mainParty.characterList[2].health + battle.mainParty.characterList[3].health) > 0 &&
+                (battle.enemyParty.characterList[0].health + battle.enemyParty.characterList[1].health + battle.enemyParty.characterList[2].health + battle.mainParty.characterList[3].health) > 0)
+            {
+                RefreshActiveFightScreen();
+                FightScreen.PrintFightScreen();
+                battle.Turn();
+            }
+
+        }
+        public void RefreshActiveFightScreen()
+        {
+            screen.PopulateMainStats(battle.mainParty);
+            FightScreen.PopulateEnemyHealth(battle.enemyParty);
+            FightScreen.PopulateEnemyMana(battle.enemyParty);
         }
     }
 }

@@ -86,11 +86,12 @@ namespace FantasyRPG
             resistLight = (piety / 5);
             resistDark = (piety / 5);
         }
-        public void Attack()
+        public double Attack()
         {
             double damage = dice.DFour();
             damage += (strength / 5);
             actionString = name + " has Attacked ";
+            return damage;
         }
         public void Defend()
         {
@@ -104,7 +105,12 @@ namespace FantasyRPG
         {
             double damageMultiplier = CheckElement(Element);
             double damage = Damage * damageMultiplier;
-            damage -= armor;
+            double currentArmor = armor;
+            if(currentArmor > damage)
+            {
+                currentArmor = damage;
+            }
+            damage -= currentArmor;
             health -= damage;
             responceString = name + " for " + damage;
         }

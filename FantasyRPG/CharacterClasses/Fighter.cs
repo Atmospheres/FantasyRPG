@@ -21,6 +21,9 @@ namespace FantasyRPG
             intelligenceOnLevel = 1;
             pietyStart = 5;
             pietyOnLevel = 1;
+            KnownSkillList.Add("Stance");
+            KnownSkillList.Add("Cyclone");
+            KnownSkillList.Add("Bash");
         }
     }
 }

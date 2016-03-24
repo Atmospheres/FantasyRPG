@@ -10,7 +10,6 @@ namespace FantasyRPG
     {
         public ScreenTemplate mainScreen = new ScreenTemplate();
         public ScreenTemplate screenTemplate = new ScreenTemplate();
-        public FightScreen fightScreen = new FightScreen();
 
         public Screen()
         {

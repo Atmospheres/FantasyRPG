@@ -8,20 +8,300 @@ namespace FantasyRPG
 {
     class Battle
     {
-        Party mainParty = new Party();
-        Party enemyParty = new Party();
+        public Party mainParty = new Party();
+        public Party enemyParty = new Party();
+        bool playerTurn = true;
+
         public Battle()
-        { 
+        {
         }
 
         public void BattleSetup(Party MainParty, Party EnemyParty)
         {
             mainParty = MainParty;
             enemyParty = EnemyParty;
-            mainParty.SetupParty();
-            enemyParty.SetupParty();
 
         }
-       
+        public void Turn()
+        {
+            if (playerTurn == true && (mainParty.characterList[0].health + mainParty.characterList[1].health + mainParty.characterList[2].health + mainParty.characterList[3].health) > 0)
+            {
+                for (int playerIndex = 0; playerIndex < mainParty.characterList.Count; playerIndex++)
+                {
+                    mainParty.characterList[playerIndex].CheckBuffs();
+                    ResetCursors();
+                    FightScreen.PrintFightScreen();
+                    SelectAction(mainParty.characterList[playerIndex]);
+                }
+            }
+            if (playerTurn == false && (enemyParty.characterList[0].health + enemyParty.characterList[1].health + enemyParty.characterList[2].health + mainParty.characterList[3].health) > 0)
+            {
+                for (int playerIndex = 0; playerIndex < enemyParty.characterList.Count; playerIndex++)
+                {
+                    ResetCursors();
+                    FightScreen.cursorSectionOne = 1;
+                    FightScreen.PrintFightScreen();
+
+                }
+            }
+        }
+        public void ResetCursors()
+        {
+            FightScreen.cursorSectionOne = 1;
+            FightScreen.cursorSectionTwo = 0;
+            FightScreen.sectionTwoLength = 7;// change to players skill list length
+            FightScreen.cursorSectionThree = 0;
+            FightScreen.sectionThreeLength = 7;// change to skill sub  list length
+            FightScreen.cursorSectionFour = 0; 
+        }
+        public void SelectAction(Character Player)
+        {
+            int activeCursor = 1;
+            int lastCursor = 0;
+            FightScreen.cursorSectionOne = 1;
+            ConsoleKey keyInput = Console.ReadKey(true).Key;
+            while (activeCursor > 0)
+            {
+                if (activeCursor == 1)
+                {
+                    while (activeCursor == 1)
+                    {
+                        if (keyInput == ConsoleKey.UpArrow)
+                        {
+                            FightScreen.MoveCursorOneUp();
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.DownArrow)
+                        {
+                            FightScreen.MoveCursorOneDown();
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.Enter)
+                        {
+                            if (FightScreen.cursorSectionOne == 1)
+                            {
+                                activeCursor = 4;
+                                lastCursor = 1;
+                                FightScreen.cursorSectionFour = 1;
+                                FightScreen.PrintFightScreen();
+                                keyInput = Console.ReadKey(true).Key;
+                            }
+                            else if (FightScreen.cursorSectionOne == 2)
+                            {
+                                activeCursor = 0;
+                                lastCursor = 1;
+                                FightScreen.cursorSectionTwo = 1;
+                                FightScreen.PrintFightScreen();
+                                keyInput = Console.ReadKey(true).Key;
+                                Player.Defend();
+                            }
+                            else if (FightScreen.cursorSectionOne == 3)
+                            {
+                                activeCursor = 2;
+                                lastCursor = 1;
+                                FightScreen.cursorSectionTwo = 1;
+                                FightScreen.ClearSectionTwo();
+                                FightScreen.sectionTwoLength = Player.characterClass.KnownSkillList.Count();
+                                FightScreen.PopulateSectionTwoSkills(Player.characterClass.KnownSkillList);
+                                FightScreen.PrintFightScreen();
+                                keyInput = Console.ReadKey(true).Key;
+                            }
+                            else if (FightScreen.cursorSectionOne == 4)
+                            {
+                                activeCursor = 2;
+                                lastCursor = 1;
+                                FightScreen.ClearSectionTwo();
+                                FightScreen.sectionTwoLength = mainParty.inventory.Count();
+                                FightScreen.PopulateSectionTwoItems(mainParty.inventory);
+                                FightScreen.cursorSectionTwo = 1;
+                                FightScreen.PrintFightScreen();
+                                keyInput = Console.ReadKey(true).Key;
+                            }
+                        }
+                        else
+                        {
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                    }
+                }
+                if(activeCursor ==2)
+                {
+                    while (activeCursor == 2)
+                     {
+                        if (keyInput == ConsoleKey.UpArrow)
+                         {
+                            FightScreen.MoveCursorTwoUp();
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.DownArrow)
+                        {
+                            FightScreen.MoveCursorTwoDown();
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.Enter)
+                        {
+                            
+                            FightScreen.cursorSectionThree = 1;
+                            FightScreen.PrintFightScreen();
+                            activeCursor = 3;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.Spacebar)
+                        {
+                            FightScreen.ClearSectionTwo();
+                            FightScreen.cursorSectionTwo = 0;
+                            FightScreen.PrintFightScreen();
+                            activeCursor = lastCursor;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else
+                        {
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                    }
+                }
+                if(activeCursor == 3)
+                {
+                    while (activeCursor == 3)
+                    {
+                        keyInput = Console.ReadKey(true).Key;
+                        if (keyInput == ConsoleKey.UpArrow)
+                        {
+                            FightScreen.MoveCursorThreeUp();
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.DownArrow)
+                        {
+                            FightScreen.MoveCursorThreeDown();
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.Enter)
+                        {
+                            FightScreen.cursorSectionFour = 1;
+                            FightScreen.PrintFightScreen();
+                            activeCursor = 4;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.Spacebar)
+                        {
+                           // FightScreen.ClearSectionThree(); 
+                            FightScreen.cursorSectionThree = 0;
+                            FightScreen.PrintFightScreen();
+                            activeCursor = lastCursor;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else
+                        {
+                            FightScreen.PrintFightScreen();
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                    }
+                }
+                if(activeCursor == 4)
+                {
+                    while (activeCursor == 4)
+                    {
+                        if (keyInput == ConsoleKey.UpArrow)
+                        {
+                            FightScreen.MoveCursorFourUp();
+                            FightScreen.PrintFightScreen();
+                            keyInput = ConsoleKey.Clear;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.DownArrow)
+                        {
+                            FightScreen.MoveCursorFourDown();
+                            FightScreen.PrintFightScreen();
+                            keyInput = ConsoleKey.Clear;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.LeftArrow)
+                        {
+                            FightScreen.MoveCursorFourLeft();
+                            FightScreen.PrintFightScreen();
+                            keyInput = ConsoleKey.Clear;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.RightArrow)
+                        {
+                            FightScreen.MoveCursorFourRight();
+                            FightScreen.PrintFightScreen();
+                            keyInput = ConsoleKey.Clear;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                        else if (keyInput == ConsoleKey.Enter)
+                        {
+                            if (FightScreen.cursorSectionOne == 1)
+                            {
+                                if (FightScreen.cursorSectionFour > 4)
+                                {
+                                    int element = 0;
+                                    enemyParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveAttack(Player.Attack(), element);
+                                    ResetCursors();
+                                    FightScreen.AddEnemyInfo(enemyParty);
+                                    FightScreen.PrintFightScreen();
+                                    keyInput = ConsoleKey.Clear;
+                                    activeCursor = 0;
+                                }
+                                else if (FightScreen.cursorSectionFour < 5)
+                                {
+                                    int element = 0;
+                                    mainParty.characterList[(FightScreen.cursorSectionFour - 1)].RecieveAttack(Player.Attack(), element);
+                                    ResetCursors();
+                                    FightScreen.AddEnemyInfo(enemyParty);
+                                    FightScreen.PrintFightScreen();
+                                    keyInput = ConsoleKey.Clear;
+                                    activeCursor = 0;
+                                }
+                            }
+                            else if (FightScreen.cursorSectionOne == 3)
+                            {
+                                /*   int element = 0;
+                                   enemyParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveAttack(Player.Attack(), element);
+                                   ResetCursors();
+                                   FightScreen.AddEnemyInfo(enemyParty);
+                                   FightScreen.PrintFightScreen();
+                                   keyInput = ConsoleKey.Clear; 
+                                   */
+                                activeCursor = 0;
+                            }
+                            else if (FightScreen.cursorSectionOne == 4)
+                            {
+                                /* int element = 0;
+                                 enemyParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveAttack(Player.Attack(), element);
+                                 ResetCursors();
+                                 FightScreen.AddEnemyInfo(enemyParty);
+                                 FightScreen.PrintFightScreen();
+                                 keyInput = ConsoleKey.Clear; */
+                                activeCursor = 0;
+                            }
+
+                        }
+                        else if (keyInput == ConsoleKey.Spacebar)
+                        {
+                            FightScreen.cursorSectionFour = 0;
+                            FightScreen.PrintFightScreen();
+                            keyInput = ConsoleKey.Clear;
+                            keyInput = Console.ReadKey(true).Key;
+                            activeCursor = lastCursor;
+                        }
+                        else
+                        {
+                            FightScreen.PrintFightScreen();
+                            keyInput = ConsoleKey.Clear;
+                            keyInput = Console.ReadKey(true).Key;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

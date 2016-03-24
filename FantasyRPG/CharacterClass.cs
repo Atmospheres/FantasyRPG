@@ -8,7 +8,7 @@ namespace FantasyRPG
 {
     public class CharacterClass
     {
-        protected List<string> KnownSkillList = new List<string>();
+        public List<string> KnownSkillList = new List<string>();
         public string className;
         public int strengthStart = 0;
         public int strengthOnLevel = 0;

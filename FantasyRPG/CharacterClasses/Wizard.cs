@@ -22,6 +22,9 @@ namespace FantasyRPG
             intelligenceOnLevel = 4;
             pietyStart = 15;
             pietyOnLevel = 3;
+            KnownSkillList.Add("M. Bolt");
+            KnownSkillList.Add("M. Shield");
+            KnownSkillList.Add("Drain");
         }
     }
 }

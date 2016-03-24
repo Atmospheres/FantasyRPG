@@ -12,7 +12,7 @@ namespace FantasyRPG
         public int level;
         public int experience;
         public List<Character> characterList = new List<Character>();
-        //List<Item> Inventory = new List<Item>();
+        public List<string> inventory = new List<string>();
         public Party()
         { 
         }

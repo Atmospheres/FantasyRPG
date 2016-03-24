@@ -6,47 +6,150 @@ using System.Threading.Tasks;
 
 namespace FantasyRPG
 {
-    class FightScreen
+    static class FightScreen
     {
-        int cursorSectionOne = 1;
-        int cursorSectionTwo = 1;
-        int cursorSectionThree = 1;
-        int cursorSectionFour = 1;
-        public char[,] fightTemplate = new char[48, 64];
+        public static int cursorSectionOne = 0;
+        public static int cursorSectionTwo = 0;
+        public static int sectionTwoLength;
+        public static int cursorSectionThree = 0;
+        public static int sectionThreeLength;
+        public static int cursorSectionFour = 0;
+        static public char[,] fightTemplate = new char[48, 64];
 
-        public void MoveCursorOne()
-        { 
+        static public void MoveCursorOneUp()
+        {
+            if (cursorSectionOne > 1)
+            {
+                cursorSectionOne -= 1;
+            }
         }
-        public void MoveCursorTwo()
+        static public void MoveCursorOneDown()
+        {
+            if(cursorSectionOne < 4)
+            {
+                cursorSectionOne += 1;
+            }
+        }
+        static public void MoveCursorTwoUp()
+        {
+            if (cursorSectionTwo > 1)
+            {
+                cursorSectionTwo -= 1;
+            }
+        }
+        static public void MoveCursorTwoDown()
+        {
+            if (cursorSectionTwo < sectionTwoLength)
+            {
+                cursorSectionTwo += 1;
+            }
+        }
+        static public void MoveCursorThreeUp()
+        {
+            if (cursorSectionThree > 1)
+            {
+                cursorSectionThree -= 1;
+            }
+        }
+        static public void MoveCursorThreeDown()
+        {
+            if (cursorSectionThree < sectionThreeLength)
+            {
+                cursorSectionThree += 1;
+            }
+        }
+        static public void MoveCursorFourUp()
+        {
+            if (cursorSectionFour == 5)
+            { }
+            else if (cursorSectionFour > 1)
+            {
+                cursorSectionFour -= 1;
+            }
+        }
+        static public void MoveCursorFourDown()
+        {
+            if (cursorSectionFour > 0 && cursorSectionFour < 4)
+            {
+                cursorSectionFour += 1;
+            }
+            if (cursorSectionFour > 4 && cursorSectionFour < 8)
+            {
+                cursorSectionFour += 1;
+            }
+        }
+        static public void MoveCursorFourLeft()
+        {
+            if (cursorSectionFour > 4)
+            {
+                cursorSectionFour -= 4;
+            }
+        }
+        static public void MoveCursorFourRight()
+        {
+            if (cursorSectionFour < 5)
+            {
+                cursorSectionFour += 4;
+            }
+        }
+        static public void PopulateSectionTwoSkills(List<string> SkillList)
+        {
+            int optionsLength = SkillList.Count();
+            fightTemplate[9, 2] = 'S';
+            fightTemplate[9, 3] = 'K';
+            fightTemplate[9, 4] = 'I';
+            fightTemplate[9, 5] = 'L';
+            fightTemplate[9, 6] = 'L';
+            fightTemplate[9, 7] = 'S';
+            fightTemplate[9, 8] = ':';
+            for (int skillListIndex = 0; skillListIndex < optionsLength; skillListIndex++)
+            {
+                char[] skillCharArray;
+                skillCharArray = SkillList[skillListIndex].ToCharArray();
+                for (int skillArrayIndex = 0; skillArrayIndex < skillCharArray.Count(); skillArrayIndex++)
+                {
+                    fightTemplate[(skillListIndex + 10), (skillArrayIndex + 2)] = skillCharArray[skillArrayIndex];
+                }
+            }
+        }
+        static public void PopulateSectionTwoItems(List<string> SkillList)
+        {
+            int optionsLength = SkillList.Count();
+            fightTemplate[9, 2] = 'I';
+            fightTemplate[9, 3] = 'T';
+            fightTemplate[9, 4] = 'E';
+            fightTemplate[9, 5] = 'M';
+            fightTemplate[9, 6] = 'S';
+            fightTemplate[9, 7] = ':';
+            for (int skillListIndex = 0; skillListIndex < optionsLength; skillListIndex++)
+            {
+                char[] skillCharArray;
+                skillCharArray = SkillList[skillListIndex].ToCharArray();
+                for (int skillArrayIndex = 0; skillArrayIndex < skillCharArray.Count(); skillArrayIndex++)
+                {
+                    fightTemplate[(skillListIndex + 10), (skillArrayIndex + 2)] = skillCharArray[skillArrayIndex];
+                }
+            }
+        }
+    
+        static public void ClearSectionTwo()
+        {
+            for(int i = 9; i < 17; i++)
+            {
+                for(int j = 2; j < 13; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+                
+        }
+        static public void PopulateSectionThreeItems(List<string> Options)
         {
 
         }
-        public void MoveCursorThree()
+        static public void PrintFightScreen()
         {
-
-        }
-        public void MoveCursorFour()
-
-        {
-
-        }
-        // basic print
-        /* public void PrintFightScreen()
-         {
-             //top
-             for (int i = 0; i < 48; i++)
-             {
-                 for (int j = 0; j < 64; j++)
-                 {
-                     Console.Write(fightTemplate[i, j]);
-                 }
-                 Console.WriteLine();
-             }
-             for(int i = )
-
-         } */
-        public void PrintFightScreen()
-        {
+            Console.Clear();
             for (int row = 0; row < 10; row++)
             {
                 for (int col = 0; col < 64; col++)
@@ -55,7 +158,6 @@ namespace FantasyRPG
                 }
                 Console.WriteLine();
             }
-            //row 11
             Console.Write(fightTemplate[10, 0]);
             Console.Write(fightTemplate[10, 1]);
             if(cursorSectionTwo == 1)
@@ -74,10 +176,6 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[10, col]);
             }
             Console.WriteLine();
-
-
-
-            // row 12
             Console.Write(fightTemplate[11, 0]);
             Console.Write(fightTemplate[11, 1]);
             if (cursorSectionTwo == 2)
@@ -96,13 +194,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[11, col]);
             }
             Console.WriteLine();
-
-
-
-            //row 13
             Console.Write(fightTemplate[12, 0]);
             Console.Write(fightTemplate[12, 1]);
-
             if (cursorSectionTwo == 3)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -119,14 +212,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[12, col]);
             }
             Console.WriteLine();
-
-
-
-
-            //row 14
             Console.Write(fightTemplate[13, 0]);
             Console.Write(fightTemplate[13, 1]);
-
             if (cursorSectionTwo == 4)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -143,13 +230,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[13, col]);
             }
             Console.WriteLine();
-
-
-
-            //row 15
             Console.Write(fightTemplate[14, 0]);
             Console.Write(fightTemplate[14, 1]);
-
             if (cursorSectionTwo == 5)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -166,13 +248,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[14, col]);
             }
             Console.WriteLine();
-
-
-
-            //row 16
             Console.Write(fightTemplate[15, 0]);
             Console.Write(fightTemplate[15, 1]);
-
             if (cursorSectionTwo == 6)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -189,13 +266,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[15, col]);
             }
             Console.WriteLine();
-
-
-
-            //row 17
             Console.Write(fightTemplate[16, 0]);
             Console.Write(fightTemplate[16, 1]);
-
             if (cursorSectionTwo == 7)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -212,8 +284,6 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[16, col]);
             }
             Console.WriteLine();
-
-            //row 18-19
             for (int row = 18; row < 20; row++)
             {
                 for (int col = 0; col < 64; col++)
@@ -222,7 +292,6 @@ namespace FantasyRPG
                 }
                 Console.WriteLine();
             }
-            //row 20
             Console.Write(fightTemplate[20, 0]);
             Console.Write(fightTemplate[20, 1]);
 
@@ -242,10 +311,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[20, col]);
             }
             Console.WriteLine();
-            //row 21
             Console.Write(fightTemplate[21, 0]);
             Console.Write(fightTemplate[21, 1]);
-
             if (cursorSectionThree == 2)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -262,10 +329,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[21, col]);
             }
             Console.WriteLine();
-            //row 22
             Console.Write(fightTemplate[22, 0]);
             Console.Write(fightTemplate[22, 1]);
-
             if (cursorSectionThree == 3)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -282,7 +347,6 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[22, col]);
             }
             Console.WriteLine();
-            //row 23
             Console.Write(fightTemplate[23, 0]);
             Console.Write(fightTemplate[23, 1]);
             if (cursorSectionThree == 4)
@@ -301,10 +365,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[23, col]);
             }
             Console.WriteLine();
-            //row 24
             Console.Write(fightTemplate[23, 0]);
             Console.Write(fightTemplate[23, 1]);
-
             if (cursorSectionThree == 5)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -321,7 +383,6 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[23, col]);
             }
             Console.WriteLine();
-            //row 25
             Console.Write(fightTemplate[24, 0]);
             Console.Write(fightTemplate[24, 1]);
 
@@ -341,10 +402,8 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[24, col]);
             }
             Console.WriteLine();
-            //row 26
             Console.Write(fightTemplate[25, 0]);
             Console.Write(fightTemplate[25, 1]);
-
             if (cursorSectionThree == 7)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -361,7 +420,6 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[25, col]);
             }
             Console.WriteLine();
-            //row 27-41
             for (int row = 27; row < 41; row++)
             {
                 for (int col = 0; col < 64; col++)
@@ -370,10 +428,8 @@ namespace FantasyRPG
                 }
                 Console.WriteLine();
             }
-            //row 42 action
             Console.Write(fightTemplate[41, 0]);
             Console.Write(fightTemplate[41, 1]);
-
             if (cursorSectionOne == 1)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -387,7 +443,6 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[41, 12]);
             Console.Write(fightTemplate[41, 13]);
-            //row 42 name
             if (cursorSectionFour == 1)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -401,7 +456,6 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[41, 24]);
             Console.Write(fightTemplate[41, 25]);
-            //row 42 enemyName
             if (cursorSectionFour == 5)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -413,17 +467,13 @@ namespace FantasyRPG
             }
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.White;
-            //finish row 42
             for (int col = 38; col < 64; col++)
             {
                 Console.Write(fightTemplate[41, col]);
             }
             Console.WriteLine();
-
-            //row 43 action
             Console.Write(fightTemplate[42, 0]);
             Console.Write(fightTemplate[42, 1]);
-
             if (cursorSectionOne == 2)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -437,7 +487,6 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[42, 12]);
             Console.Write(fightTemplate[42, 13]);
-            //row 43 name
             if (cursorSectionFour == 2)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -451,7 +500,6 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[42, 24]);
             Console.Write(fightTemplate[42, 25]);
-            //row 43 enemyName
             if (cursorSectionFour == 6)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -463,19 +511,13 @@ namespace FantasyRPG
             }
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.White;
-            //finish row 43
             for (int col = 38; col < 64; col++)
             {
                 Console.Write(fightTemplate[42, col]);
             }
             Console.WriteLine();
-
-
-
-            //row 44 action
             Console.Write(fightTemplate[43, 0]);
             Console.Write(fightTemplate[43, 1]);
-
             if (cursorSectionOne == 3)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -489,7 +531,6 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[43, 12]);
             Console.Write(fightTemplate[43, 13]);
-            //row 44 name
             if (cursorSectionFour == 3)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -503,7 +544,6 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[43, 24]);
             Console.Write(fightTemplate[43, 25]);
-            //row 44 enemyName
             if (cursorSectionFour == 7)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -515,17 +555,13 @@ namespace FantasyRPG
             }
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.White;
-            //finish row 44
             for (int col = 38; col < 64; col++)
             {
                 Console.Write(fightTemplate[43, col]);
             }
             Console.WriteLine();
-
-            //row 45 action
             Console.Write(fightTemplate[44, 0]);
             Console.Write(fightTemplate[44, 1]);
-
             if (cursorSectionOne == 4)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -539,7 +575,6 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[44, 12]);
             Console.Write(fightTemplate[44, 13]);
-            //row 45 name
             if (cursorSectionFour == 4)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -553,7 +588,6 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[44, 24]);
             Console.Write(fightTemplate[44, 25]);
-            //row 45 enemyName
             if (cursorSectionFour == 8)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -565,14 +599,11 @@ namespace FantasyRPG
             }
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.White;
-            //finish row 45
             for (int col = 38; col < 64; col++)
             {
                 Console.Write(fightTemplate[44, col]);
             }
             Console.WriteLine();
-
-            //row 46-48
             for (int row = 45; row < 48; row++)
             {
                 for (int col = 0; col < 64; col++)
@@ -583,7 +614,7 @@ namespace FantasyRPG
             }
 
         }
-        public void PopulateFightScreen(ScreenTemplate Template)
+        static public void PopulateFightScreen(ScreenTemplate Template)
         {
             for (int i = 0; i < 48; i++)
             {
@@ -594,7 +625,7 @@ namespace FantasyRPG
             }
             AddFightElements();
         }
-        public void PopulateSubNames(Party MainParty)
+        static public void PopulateSubNames(Party MainParty)
         {
             for (int characterListIndex = 0; characterListIndex < MainParty.characterList.Count(); characterListIndex++)
             {
@@ -606,21 +637,21 @@ namespace FantasyRPG
                 }
             }
         }
-        public void AddFightElements()
+        static public void AddFightElements()
         {
             AddFightOptions();
             AddCombatLog();
             AddSideContainers();
             AddBottomContainer();
         }
-        public void AddEnemyInfo(Party EnemyParty)
+        static public void AddEnemyInfo(Party EnemyParty)
         {
             PopulateEnemyNames(EnemyParty);
             PopulateEnemyHealth(EnemyParty);
             PopulateEnemyMana(EnemyParty);
         }
 
-        public void PopulateEnemyNames(Party EnemyParty)
+        static public void PopulateEnemyNames(Party EnemyParty)
         {
             for (int characterListIndex = 0; characterListIndex < EnemyParty.characterList.Count(); characterListIndex++)
             {
@@ -632,7 +663,7 @@ namespace FantasyRPG
                 }
             }
         }
-        public void PopulateEnemyHealth(Party EnemyParty)
+        static public void PopulateEnemyHealth(Party EnemyParty)
         {
             for (int characterListIndex = 0; characterListIndex < EnemyParty.characterList.Count(); characterListIndex++)
             {
@@ -654,7 +685,7 @@ namespace FantasyRPG
                 }
             }
         }
-        public void PopulateEnemyMana(Party EnemyParty)
+        static public void PopulateEnemyMana(Party EnemyParty)
         {
             for (int characterListIndex = 0; characterListIndex < EnemyParty.characterList.Count(); characterListIndex++)
             {
@@ -676,7 +707,7 @@ namespace FantasyRPG
                 }
             }
         }
-        public void AddSideContainers()
+        static public void AddSideContainers()
         {
             for (int i = 9; i < 27; i++)
             {
@@ -691,7 +722,7 @@ namespace FantasyRPG
             fightTemplate[18, 1] = '╠';
             fightTemplate[18, 14] = '╣';
         }
-        public void AddCombatLog()
+        static public void AddCombatLog()
         {
             for (int j = 2; j < 62; j++)
             {
@@ -710,13 +741,14 @@ namespace FantasyRPG
             fightTemplate[28, 11] = 'G';
             fightTemplate[28, 12] = ':';
         }
-        public void AddFightOptions()
+        static public void AddFightOptions()
         {
-                fightTemplate[41, 2] = 'F';
-                fightTemplate[41, 3] = 'I';
-                fightTemplate[41, 4] = 'G';
-                fightTemplate[41, 5] = 'H';
-                fightTemplate[41, 6] = 'T';
+                fightTemplate[41, 2] = 'A';
+                fightTemplate[41, 3] = 'T';
+                fightTemplate[41, 4] = 'T';
+                fightTemplate[41, 5] = 'A';
+                fightTemplate[41, 6] = 'C';
+                fightTemplate[41, 7] = 'K';
                 fightTemplate[42, 2] = 'D';
                 fightTemplate[42, 3] = 'E';
                 fightTemplate[42, 4] = 'F';
@@ -735,7 +767,7 @@ namespace FantasyRPG
                 fightTemplate[44, 5] = 'M';
                 fightTemplate[44, 6] = 'S';
         }
-        public void AddBottomContainer()
+        static public void AddBottomContainer()
         {
             for (int j = 2; j < 62; j++)
             {
