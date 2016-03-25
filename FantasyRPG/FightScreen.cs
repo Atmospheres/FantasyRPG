@@ -143,10 +143,30 @@ namespace FantasyRPG
             }
                 
         }
-        static public void PopulateSectionThreeItems(List<string> Options)
+        static public void PopulateSectionThree(List<string> SubSkillList)
         {
-
+            int optionsLength = SubSkillList.Count();
+            for (int subSkillListIndex = 0; subSkillListIndex < optionsLength; subSkillListIndex++)
+            {
+                char[] subSkillCharArray;
+                subSkillCharArray = SubSkillList[subSkillListIndex].ToCharArray();
+                for (int subSkillArrayIndex = 0; subSkillArrayIndex < subSkillCharArray.Count(); subSkillArrayIndex++)
+                {
+                    fightTemplate[(subSkillListIndex + 20), (subSkillArrayIndex + 2)] = subSkillCharArray[subSkillArrayIndex];
+                }
+            }
         }
+        static public void ClearSectionThree()
+        {
+            for (int i = 19; i < 27; i++)
+            {
+                for (int j = 2; j < 13; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+
+        } 
         static public void PrintFightScreen()
         {
             Console.Clear();
@@ -292,6 +312,8 @@ namespace FantasyRPG
                 }
                 Console.WriteLine();
             }
+
+
             Console.Write(fightTemplate[20, 0]);
             Console.Write(fightTemplate[20, 1]);
 
@@ -310,6 +332,8 @@ namespace FantasyRPG
             {
                 Console.Write(fightTemplate[20, col]);
             }
+
+
             Console.WriteLine();
             Console.Write(fightTemplate[21, 0]);
             Console.Write(fightTemplate[21, 1]);
@@ -347,6 +371,10 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[22, col]);
             }
             Console.WriteLine();
+
+
+
+
             Console.Write(fightTemplate[23, 0]);
             Console.Write(fightTemplate[23, 1]);
             if (cursorSectionThree == 4)
@@ -365,28 +393,16 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[23, col]);
             }
             Console.WriteLine();
-            Console.Write(fightTemplate[23, 0]);
-            Console.Write(fightTemplate[23, 1]);
-            if (cursorSectionThree == 5)
-            {
-                Console.BackgroundColor = ConsoleColor.Cyan;
-                Console.ForegroundColor = ConsoleColor.Blue;
-            }
-            for (int col = 2; col < 14; col++)
-            {
-                Console.Write(fightTemplate[23, col]);
-            }
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.ForegroundColor = ConsoleColor.White;
-            for (int col = 14; col < 64; col++)
-            {
-                Console.Write(fightTemplate[23, col]);
-            }
-            Console.WriteLine();
+
+
+            
+
+
+
+
             Console.Write(fightTemplate[24, 0]);
             Console.Write(fightTemplate[24, 1]);
-
-            if (cursorSectionThree == 6)
+            if (cursorSectionThree == 5)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -404,7 +420,7 @@ namespace FantasyRPG
             Console.WriteLine();
             Console.Write(fightTemplate[25, 0]);
             Console.Write(fightTemplate[25, 1]);
-            if (cursorSectionThree == 7)
+            if (cursorSectionThree == 6)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -420,6 +436,29 @@ namespace FantasyRPG
                 Console.Write(fightTemplate[25, col]);
             }
             Console.WriteLine();
+
+
+            Console.Write(fightTemplate[26, 0]);
+            Console.Write(fightTemplate[26, 1]);
+            if (cursorSectionThree == 7)
+            {
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.Blue;
+            }
+            for (int col = 2; col < 14; col++)
+            {
+                Console.Write(fightTemplate[26, col]);
+            }
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.ForegroundColor = ConsoleColor.White;
+            for (int col = 14; col < 64; col++)
+            {
+                Console.Write(fightTemplate[26, col]);
+            }
+            Console.WriteLine();
+
+
+
             for (int row = 27; row < 41; row++)
             {
                 for (int col = 0; col < 64; col++)
@@ -743,29 +782,29 @@ namespace FantasyRPG
         }
         static public void AddFightOptions()
         {
-                fightTemplate[41, 2] = 'A';
-                fightTemplate[41, 3] = 'T';
-                fightTemplate[41, 4] = 'T';
-                fightTemplate[41, 5] = 'A';
-                fightTemplate[41, 6] = 'C';
-                fightTemplate[41, 7] = 'K';
-                fightTemplate[42, 2] = 'D';
-                fightTemplate[42, 3] = 'E';
-                fightTemplate[42, 4] = 'F';
-                fightTemplate[42, 5] = 'E';
-                fightTemplate[42, 6] = 'N';
-                fightTemplate[42, 7] = 'D';
-                fightTemplate[43, 2] = 'S';
-                fightTemplate[43, 3] = 'K';
-                fightTemplate[43, 4] = 'I';
-                fightTemplate[43, 5] = 'L';
-                fightTemplate[43, 6] = 'L';
-                fightTemplate[43, 7] = 'S';
-                fightTemplate[44, 2] = 'I';
-                fightTemplate[44, 3] = 'T';
-                fightTemplate[44, 4] = 'E';
-                fightTemplate[44, 5] = 'M';
-                fightTemplate[44, 6] = 'S';
+            fightTemplate[41, 2] = 'A';
+            fightTemplate[41, 3] = 'T';
+            fightTemplate[41, 4] = 'T';
+            fightTemplate[41, 5] = 'A';
+            fightTemplate[41, 6] = 'C';
+            fightTemplate[41, 7] = 'K';
+            fightTemplate[42, 2] = 'D';
+            fightTemplate[42, 3] = 'E';
+            fightTemplate[42, 4] = 'F';
+            fightTemplate[42, 5] = 'E';
+            fightTemplate[42, 6] = 'N';
+            fightTemplate[42, 7] = 'D';
+            fightTemplate[43, 2] = 'S';
+            fightTemplate[43, 3] = 'K';
+            fightTemplate[43, 4] = 'I';
+            fightTemplate[43, 5] = 'L';
+            fightTemplate[43, 6] = 'L';
+            fightTemplate[43, 7] = 'S';
+            fightTemplate[44, 2] = 'I';
+            fightTemplate[44, 3] = 'T';
+            fightTemplate[44, 4] = 'E';
+            fightTemplate[44, 5] = 'M';
+            fightTemplate[44, 6] = 'S';
         }
         static public void AddBottomContainer()
         {

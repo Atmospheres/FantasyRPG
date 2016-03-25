@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FantasyRPG
 {
-    class Fighter : CharacterClass
-    { 
-        public Fighter()
+    class Ranger : CharacterClass
+    {
+        public Ranger()
         {
-            className = "Fighter";
+            className = "Ranger";
             strengthStart = 20;
             strengthOnLevel = 4;
             constitutionStart = 20;
@@ -21,11 +21,12 @@ namespace FantasyRPG
             intelligenceOnLevel = 1;
             pietyStart = 5;
             pietyOnLevel = 1;
-            KnownSkillList.Add("Stance");
-            KnownSkillList.Add("Cyclone");
-            KnownSkillList.Add("Bash");
-            KnownSkillList.Add("Guard");
-            KnownSkillList.Add("Bandage");
+            KnownSkillList.Add("Aimed Shot");
+            KnownSkillList.Add("Expl. Shot");
+            KnownSkillList.Add("Mend Wound");
+            KnownSkillList.Add("Conc. Shot");
+            KnownSkillList.Add("Barrage");
+            KnownSkillList.Add("Volley");
         }
     }
 }

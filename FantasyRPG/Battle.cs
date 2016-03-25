@@ -54,6 +54,35 @@ namespace FantasyRPG
             FightScreen.sectionThreeLength = 7;// change to skill sub  list length
             FightScreen.cursorSectionFour = 0; 
         }
+        public void SetThreeOptions(Character Player)
+        {
+            switch (FightScreen.cursorSectionTwo)
+            {
+                case 1:
+                    Player.characterClass.MoveOneOptions();
+                    break;
+                case 2:
+                    Player.characterClass.MoveTwoOptions();
+                    break;
+                case 3:
+                    Player.characterClass.MoveThreeOptions();
+                    break;
+                case 4:
+                    Player.characterClass.MoveFourOptions();
+                    break;
+                case 5:
+                    Player.characterClass.MoveFiveOptions();
+                    break;
+                case 6:
+                    Player.characterClass.MoveSixOptions();
+                    break;
+                case 7:
+                    Player.characterClass.MoveSevenOptions();
+                    break;
+                default:
+                    break;
+            }
+        }
         public void SelectAction(Character Player)
         {
             int activeCursor = 1;
@@ -84,7 +113,7 @@ namespace FantasyRPG
                             {
                                 activeCursor = 4;
                                 lastCursor = 1;
-                                FightScreen.cursorSectionFour = 1;
+                                FightScreen.cursorSectionFour = 5;
                                 FightScreen.PrintFightScreen();
                                 keyInput = Console.ReadKey(true).Key;
                             }
@@ -92,7 +121,6 @@ namespace FantasyRPG
                             {
                                 activeCursor = 0;
                                 lastCursor = 1;
-                                FightScreen.cursorSectionTwo = 1;
                                 FightScreen.PrintFightScreen();
                                 keyInput = Console.ReadKey(true).Key;
                                 Player.Defend();
@@ -113,8 +141,8 @@ namespace FantasyRPG
                                 activeCursor = 2;
                                 lastCursor = 1;
                                 FightScreen.ClearSectionTwo();
-                                FightScreen.sectionTwoLength = mainParty.inventory.Count();
-                                FightScreen.PopulateSectionTwoItems(mainParty.inventory);
+                                FightScreen.sectionTwoLength = mainParty.inventoryNames.Count();
+                                FightScreen.PopulateSectionTwoItems(mainParty.inventoryNames);
                                 FightScreen.cursorSectionTwo = 1;
                                 FightScreen.PrintFightScreen();
                                 keyInput = Console.ReadKey(true).Key;
@@ -132,7 +160,7 @@ namespace FantasyRPG
                     while (activeCursor == 2)
                      {
                         if (keyInput == ConsoleKey.UpArrow)
-                         {
+                        {
                             FightScreen.MoveCursorTwoUp();
                             FightScreen.PrintFightScreen();
                             keyInput = Console.ReadKey(true).Key;
@@ -145,18 +173,34 @@ namespace FantasyRPG
                         }
                         else if (keyInput == ConsoleKey.Enter)
                         {
-                            
-                            FightScreen.cursorSectionThree = 1;
-                            FightScreen.PrintFightScreen();
-                            activeCursor = 3;
-                            keyInput = Console.ReadKey(true).Key;
+                            SetThreeOptions(Player);
+                            FightScreen.sectionThreeLength = Player.characterClass.subSkillList.Count();
+                            if (FightScreen.sectionThreeLength > 0)
+                            {
+                                activeCursor = 3;
+                                lastCursor = 2;
+                                FightScreen.PopulateSectionThree(Player.characterClass.subSkillList);
+                                FightScreen.PopulateSectionTwoSkills(Player.characterClass.KnownSkillList);
+                                FightScreen.cursorSectionThree = 1;
+                                FightScreen.PrintFightScreen();
+                                keyInput = Console.ReadKey(true).Key;
+                            }
+                            else
+                            {
+                                activeCursor = 4;
+                                lastCursor = 2;
+                                FightScreen.cursorSectionFour = 5;
+                                FightScreen.PrintFightScreen();
+                                keyInput = Console.ReadKey(true).Key;
+                            }
+
                         }
                         else if (keyInput == ConsoleKey.Spacebar)
                         {
                             FightScreen.ClearSectionTwo();
                             FightScreen.cursorSectionTwo = 0;
                             FightScreen.PrintFightScreen();
-                            activeCursor = lastCursor;
+                            activeCursor = 1;
                             keyInput = Console.ReadKey(true).Key;
                         }
                         else
@@ -170,7 +214,6 @@ namespace FantasyRPG
                 {
                     while (activeCursor == 3)
                     {
-                        keyInput = Console.ReadKey(true).Key;
                         if (keyInput == ConsoleKey.UpArrow)
                         {
                             FightScreen.MoveCursorThreeUp();
@@ -188,14 +231,15 @@ namespace FantasyRPG
                             FightScreen.cursorSectionFour = 1;
                             FightScreen.PrintFightScreen();
                             activeCursor = 4;
+                            lastCursor = 3;
                             keyInput = Console.ReadKey(true).Key;
                         }
                         else if (keyInput == ConsoleKey.Spacebar)
                         {
-                           // FightScreen.ClearSectionThree(); 
+                            FightScreen.ClearSectionThree(); 
                             FightScreen.cursorSectionThree = 0;
                             FightScreen.PrintFightScreen();
-                            activeCursor = lastCursor;
+                            activeCursor = 2;
                             keyInput = Console.ReadKey(true).Key;
                         }
                         else
@@ -264,7 +308,7 @@ namespace FantasyRPG
                             }
                             else if (FightScreen.cursorSectionOne == 3)
                             {
-                                /*   int element = 0;
+                                   /*int element = 0;
                                    enemyParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveAttack(Player.Attack(), element);
                                    ResetCursors();
                                    FightScreen.AddEnemyInfo(enemyParty);

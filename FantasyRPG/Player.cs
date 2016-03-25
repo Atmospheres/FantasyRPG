@@ -8,7 +8,6 @@ namespace FantasyRPG
 {
     class Player : Character
     {
-        CharacterClass Class = new CharacterClass();
         public Player(string Name)
         {
             name = Name;

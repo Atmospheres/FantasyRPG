@@ -12,7 +12,8 @@ namespace FantasyRPG
         public int level;
         public int experience;
         public List<Character> characterList = new List<Character>();
-        public List<string> inventory = new List<string>();
+        public List<string> inventoryNames = new List<string>();
+        public List<int> inventoryQuantity = new List<int>();
         public Party()
         { 
         }
@@ -45,6 +46,7 @@ namespace FantasyRPG
             Console.WriteLine("1: Fighter");
             Console.WriteLine("2: Wizard");
             Console.WriteLine("3: Priest");
+            Console.WriteLine("4: Ranger");
             int inputInt = Convert.ToInt32(Console.ReadLine());
             string classChoice;
             switch (inputInt)
@@ -57,6 +59,9 @@ namespace FantasyRPG
                     break;
                 case 3:
                     classChoice = "Priest";
+                    break;
+                case 4:
+                    classChoice = "Ranger";
                     break;
                 default:
                     classChoice = "Fighter";

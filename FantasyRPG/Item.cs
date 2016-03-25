@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace FantasyRPG
 {
-    class Item
+    public class Item
     {
+        string name;
+        string type;
     }
 }

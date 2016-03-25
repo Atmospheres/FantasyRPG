@@ -25,6 +25,51 @@ namespace FantasyRPG
             KnownSkillList.Add("M. Bolt");
             KnownSkillList.Add("M. Shield");
             KnownSkillList.Add("Drain");
+            KnownSkillList.Add("Aspir");
+            KnownSkillList.Add("Meditate");
+        }
+
+        public override void MoveOneOptions()
+        {
+            ClearSubSkillList();
+            subSkillList.Add("Fire");
+            subSkillList.Add("Ice");
+            subSkillList.Add("Wind");
+            subSkillList.Add("Earth");
+            subSkillList.Add("Lightning");
+            subSkillList.Add("Water");
+        }
+
+        public override void MoveTwoOptions()
+        {
+            ClearSubSkillList();
+            subSkillList.Add("Fire");
+            subSkillList.Add("Ice");
+            subSkillList.Add("Wind");
+            subSkillList.Add("Earth");
+            subSkillList.Add("Lightning");
+            subSkillList.Add("Water");
+        }
+
+        public override void MoveThreeOptions()
+        {
+            ClearSubSkillList();
+        }
+        public override void MoveFourOptions()
+        {
+            ClearSubSkillList();
+        }
+        public override void MoveFiveOptions()
+        {
+            ClearSubSkillList();
+        }
+        public override void MoveSixOptions()
+        {
+            ClearSubSkillList();
+        }
+        public override void MoveSevenOptions()
+        {
+            ClearSubSkillList();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace FantasyRPG
         public string responceString;
         Dice dice = new Dice();
         public CharacterClass characterClass = new CharacterClass();
-        //public List<Equipment> equipment = new List<Equipment>();
+        public List<Item> equipment = new List<Item>();
 
 
         public Character()
@@ -61,6 +61,9 @@ namespace FantasyRPG
                     break;
                 case "Priest":
                     characterClass = new Priest();
+                    break;
+                case "Ranger":
+                    characterClass = new Ranger();
                     break;
             }
         }
@@ -112,6 +115,10 @@ namespace FantasyRPG
             }
             damage -= currentArmor;
             health -= damage;
+            if(health <= 0)
+            {
+                health = 0;
+            }
             responceString = name + " for " + damage;
         }
         public double CheckElement(int Element)

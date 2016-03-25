@@ -22,8 +22,12 @@ namespace FantasyRPG
             pietyStart = 20;
             pietyOnLevel = 4;
             KnownSkillList.Add("Cure");
+            KnownSkillList.Add("Bless");
+            KnownSkillList.Add("Cleanse");
             KnownSkillList.Add("Protect");
             KnownSkillList.Add("Holy");
+            KnownSkillList.Add("Pray");
+
         }
     }
 }
