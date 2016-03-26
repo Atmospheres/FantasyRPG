@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FantasyRPG
 {
-    class Dice
+    public class Dice
     {
         Random rnd = new Random();
         public int DFour()

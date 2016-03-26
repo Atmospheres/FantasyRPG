@@ -21,12 +21,30 @@ namespace FantasyRPG
             intelligenceOnLevel = 1;
             pietyStart = 5;
             pietyOnLevel = 1;
-            KnownSkillList.Add("Aimed Shot");
-            KnownSkillList.Add("Expl. Shot");
-            KnownSkillList.Add("Mend Wound");
-            KnownSkillList.Add("Conc. Shot");
-            KnownSkillList.Add("Barrage");
-            KnownSkillList.Add("Volley");
+            skillNameToList = "Aim Shot";
+            skillToList = new AimedShot();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Expl. Shot";
+            skillToList = new ExplodingShot();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Stun Shot";
+            skillToList = new ConcussiveShot();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Stun Barrage";
+            skillToList = new ConcussiveBarrage();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Volley";
+            skillToList = new Volley();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Mend Wound";
+            skillToList = new MendWound();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
         }
     }
 }

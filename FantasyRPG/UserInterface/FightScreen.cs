@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FantasyRPG
 {
-    static class FightScreen
+    static class FightScreen 
     {
         public static int cursorSectionOne = 0;
         public static int cursorSectionTwo = 0;
@@ -14,6 +14,9 @@ namespace FantasyRPG
         public static int cursorSectionThree = 0;
         public static int sectionThreeLength;
         public static int cursorSectionFour = 0;
+        public static int activeCursor = 1;
+        public static int lastCursor = 0;
+        public static ConsoleKey keyInput = Console.ReadKey(true).Key;
         static public char[,] fightTemplate = new char[48, 64];
 
         static public void MoveCursorOneUp()
@@ -53,16 +56,14 @@ namespace FantasyRPG
         }
         static public void MoveCursorThreeDown()
         {
-            if (cursorSectionThree < sectionThreeLength)
+            if (cursorSectionThree < (sectionThreeLength))
             {
                 cursorSectionThree += 1;
             }
         }
         static public void MoveCursorFourUp()
         {
-            if (cursorSectionFour == 5)
-            { }
-            else if (cursorSectionFour > 1)
+            if (cursorSectionFour > 1 && cursorSectionFour != 5 && cursorSectionFour < 9)
             {
                 cursorSectionFour -= 1;
             }
@@ -80,13 +81,21 @@ namespace FantasyRPG
         }
         static public void MoveCursorFourLeft()
         {
-            if (cursorSectionFour > 4)
+            if (cursorSectionFour == 10)
+            {
+                cursorSectionFour = 9;
+            }
+                if (cursorSectionFour > 4 && cursorSectionFour < 9)
             {
                 cursorSectionFour -= 4;
             }
         }
         static public void MoveCursorFourRight()
         {
+            if (cursorSectionFour == 9)
+            {
+                cursorSectionFour = 10;
+            }
             if (cursorSectionFour < 5)
             {
                 cursorSectionFour += 4;
@@ -143,8 +152,14 @@ namespace FantasyRPG
             }
                 
         }
-        static public void PopulateSectionThree(List<string> SubSkillList)
+        static public void PopulateSectionThree(List<string> SubSkillList, string Type)
         {
+            char[] typeCharArray;
+            typeCharArray = Type.ToCharArray();
+            for (int typeArrayIndex = 0; typeArrayIndex < typeCharArray.Length; typeArrayIndex++)
+            {
+                fightTemplate[19, (typeArrayIndex + 2)] = typeCharArray[typeArrayIndex];
+            }
             int optionsLength = SubSkillList.Count();
             for (int subSkillListIndex = 0; subSkillListIndex < optionsLength; subSkillListIndex++)
             {
@@ -482,7 +497,7 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[41, 12]);
             Console.Write(fightTemplate[41, 13]);
-            if (cursorSectionFour == 1)
+            if (cursorSectionFour == 1 || cursorSectionFour == 9)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -495,7 +510,7 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[41, 24]);
             Console.Write(fightTemplate[41, 25]);
-            if (cursorSectionFour == 5)
+            if (cursorSectionFour == 5 || cursorSectionFour == 10)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -526,7 +541,7 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[42, 12]);
             Console.Write(fightTemplate[42, 13]);
-            if (cursorSectionFour == 2)
+            if (cursorSectionFour == 2 || cursorSectionFour == 9)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -539,7 +554,7 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[42, 24]);
             Console.Write(fightTemplate[42, 25]);
-            if (cursorSectionFour == 6)
+            if (cursorSectionFour == 6 || cursorSectionFour == 10)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -570,7 +585,7 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[43, 12]);
             Console.Write(fightTemplate[43, 13]);
-            if (cursorSectionFour == 3)
+            if (cursorSectionFour == 3 || cursorSectionFour == 9)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -583,7 +598,7 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[43, 24]);
             Console.Write(fightTemplate[43, 25]);
-            if (cursorSectionFour == 7)
+            if (cursorSectionFour == 7 || cursorSectionFour == 10)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -614,7 +629,7 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[44, 12]);
             Console.Write(fightTemplate[44, 13]);
-            if (cursorSectionFour == 4)
+            if (cursorSectionFour == 4 || cursorSectionFour == 9)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -627,7 +642,7 @@ namespace FantasyRPG
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(fightTemplate[44, 24]);
             Console.Write(fightTemplate[44, 25]);
-            if (cursorSectionFour == 8)
+            if (cursorSectionFour == 8 || cursorSectionFour == 10)
             {
                 Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -676,6 +691,7 @@ namespace FantasyRPG
                 }
             }
         }
+  
         static public void AddFightElements()
         {
             AddFightOptions();
@@ -685,6 +701,7 @@ namespace FantasyRPG
         }
         static public void AddEnemyInfo(Party EnemyParty)
         {
+
             PopulateEnemyNames(EnemyParty);
             PopulateEnemyHealth(EnemyParty);
             PopulateEnemyMana(EnemyParty);
@@ -692,6 +709,7 @@ namespace FantasyRPG
 
         static public void PopulateEnemyNames(Party EnemyParty)
         {
+            ClearEnemyNames();
             for (int characterListIndex = 0; characterListIndex < EnemyParty.characterList.Count(); characterListIndex++)
             {
                 char[] nameCharArray;
@@ -702,10 +720,22 @@ namespace FantasyRPG
                 }
             }
         }
+        static public void ClearEnemyNames()
+        {
+            for (int i = 41; i < 45; i++)
+            {
+                for (int j = 26; j < 38; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+        }
         static public void PopulateEnemyHealth(Party EnemyParty)
         {
+            ClearEnemyHealth();
             for (int characterListIndex = 0; characterListIndex < EnemyParty.characterList.Count(); characterListIndex++)
             {
+                
                 char[] healthCharArray;
                 string healthString;
                 char[] healthMaxCharArray;
@@ -724,10 +754,29 @@ namespace FantasyRPG
                 }
             }
         }
+        static public void ClearEnemyHealth()
+        {
+            for (int i = 41; i < 45; i++)
+            {
+                for (int j = 43; j < 46; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+            for (int i = 41; i < 45; i++)
+            {
+                for (int j = 47; j < 50; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+        }
         static public void PopulateEnemyMana(Party EnemyParty)
         {
+            ClearEnemyMana();
             for (int characterListIndex = 0; characterListIndex < EnemyParty.characterList.Count(); characterListIndex++)
             {
+                
                 char[] manaCharArray;
                 string manaString;
                 char[] manaMaxCharArray;
@@ -743,6 +792,244 @@ namespace FantasyRPG
                 for (int manaMaxArrayIndex = 0; manaMaxArrayIndex < manaMaxCharArray.Count(); manaMaxArrayIndex++)
                 {
                     fightTemplate[(characterListIndex + 41), (manaMaxArrayIndex + 58)] = manaMaxCharArray[manaMaxArrayIndex];
+                }
+            }
+        }
+        static public void ClearEnemyMana()
+        {
+            for (int i = 41; i < 45; i++)
+            {
+                for (int j = 54; j < 57; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+            for (int i = 41; i < 45; i++)
+            {
+                for (int j = 58; j < 61; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+        }
+        static public void PopulateMainStats(Party MainParty)
+        {
+            PopulateMainHealth(MainParty);
+            PopulateMainMana(MainParty);
+            PopulateMainStrength(MainParty);
+            PopulateMainConstitution(MainParty);
+            PopulateMainDexterity(MainParty);
+            PopulateMainIntelligence(MainParty);
+            PopulateMainPiety(MainParty);
+        }
+        static public void PopulateMainPiety(Party MainParty)
+        {
+            ClearPiety();
+            for (int characterListIndex = 0; characterListIndex < MainParty.characterList.Count(); characterListIndex++)
+            {
+                char[] pietyCharArray;
+                string pietyString;
+                pietyString = MainParty.characterList[characterListIndex].piety.ToString();
+                pietyCharArray = pietyString.ToCharArray();
+                for (int pietyArrayIndex = 0; pietyArrayIndex < pietyCharArray.Count(); pietyArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (pietyArrayIndex + 60)] = pietyCharArray[pietyArrayIndex];
+                }
+            }
+        }
+        static public void ClearPiety()
+        {
+            for (int i = 2; i < 6; i++)    
+            {
+                for(int j = 60; j < 62; j++)
+                {
+                    fightTemplate[i,j] = ' ';
+                }
+
+            }
+        }
+        static public void PopulateMainIntelligence(Party MainParty)
+        {
+            ClearIntelligence();
+            for (int characterListIndex = 0; characterListIndex < MainParty.characterList.Count(); characterListIndex++)
+            {
+                char[] intelligenceCharArray;
+                string intelligenceString;
+                intelligenceString = MainParty.characterList[characterListIndex].intelligence.ToString();
+                intelligenceCharArray = intelligenceString.ToCharArray();
+                for (int intelligenceArrayIndex = 0; intelligenceArrayIndex < intelligenceCharArray.Count(); intelligenceArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (intelligenceArrayIndex + 55)] = intelligenceCharArray[intelligenceArrayIndex];
+                }
+            }
+        }
+        static public void ClearIntelligence()
+        {
+            for (int i = 2; i < 6; i++)
+            {
+                for (int j = 55; j < 57; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+
+            }
+        }
+        static public void PopulateMainDexterity(Party MainParty)
+        {
+            ClearDexterity();
+            for (int characterListIndex = 0; characterListIndex < MainParty.characterList.Count(); characterListIndex++)
+            {
+                char[] dexterityCharArray;
+                string dexterityString;
+                dexterityString = MainParty.characterList[characterListIndex].dexterity.ToString();
+                dexterityCharArray = dexterityString.ToCharArray();
+                for (int constitutionArrayIndex = 0; constitutionArrayIndex < dexterityCharArray.Count(); constitutionArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (constitutionArrayIndex + 50)] = dexterityCharArray[constitutionArrayIndex];
+                }
+            }
+        }
+        static public void ClearDexterity()
+        {
+            for (int i = 2; i < 6; i++)
+            {
+                for (int j = 50; j < 52; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+
+            }
+        }
+        static public void PopulateMainConstitution(Party MainParty)
+        {
+            ClearConstitution();
+            for (int characterListIndex = 0; characterListIndex < MainParty.characterList.Count(); characterListIndex++)
+            {
+                char[] constitutionCharArray;
+                string constitutionString;
+                constitutionString = MainParty.characterList[characterListIndex].constitution.ToString();
+                constitutionCharArray = constitutionString.ToCharArray();
+                for (int constitutionArrayIndex = 0; constitutionArrayIndex < constitutionCharArray.Count(); constitutionArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (constitutionArrayIndex + 45)] = constitutionCharArray[constitutionArrayIndex];
+                }
+            }
+        }
+        static public void ClearConstitution()
+        {
+            for (int i = 2; i < 6; i++)
+            {
+                for (int j = 45; j < 47; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+
+            }
+        }
+        static public void PopulateMainStrength(Party MainParty)
+        {
+            ClearStrength();
+            for (int characterListIndex = 0; characterListIndex < MainParty.characterList.Count(); characterListIndex++)
+            {
+                char[] strengthCharArray;
+                string strengthString;
+                strengthString = MainParty.characterList[characterListIndex].strength.ToString();
+                strengthCharArray = strengthString.ToCharArray();
+                for (int strengthArrayIndex = 0; strengthArrayIndex < strengthCharArray.Count(); strengthArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (strengthArrayIndex + 40)] = strengthCharArray[strengthArrayIndex];
+                }
+            }
+        }
+        static public void ClearStrength()
+        {
+            for (int i = 2; i < 6; i++)
+            {
+                for (int j = 40; j < 42; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+
+            }
+        }
+        static public void PopulateMainHealth(Party MainParty)
+        {
+            ClearMainHealth();
+            for (int characterListIndex = 0; characterListIndex < MainParty.characterList.Count(); characterListIndex++)
+            {
+                char[] healthCharArray;
+                string healthString;
+                char[] healthMaxCharArray;
+                string healthMaxString;
+                healthString = MainParty.characterList[characterListIndex].health.ToString();
+                healthCharArray = healthString.ToCharArray();
+                healthMaxString = MainParty.characterList[characterListIndex].healthMax.ToString();
+                healthMaxCharArray = healthMaxString.ToCharArray();
+                for (int healthArrayIndex = 0; healthArrayIndex < healthCharArray.Count(); healthArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (healthArrayIndex + 21)] = healthCharArray[healthArrayIndex];
+                }
+                for (int healthMaxArrayIndex = 0; healthMaxArrayIndex < healthMaxCharArray.Count(); healthMaxArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (healthMaxArrayIndex + 25)] = healthMaxCharArray[healthMaxArrayIndex];
+                }
+            }
+        }
+        static public void ClearMainHealth()
+        {
+            for (int i = 2; i < 6; i++)
+            {
+                for (int j = 21; j < 24; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+            for (int i =2; i < 6; i++)
+            {
+                for (int j = 25; j < 28; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+        }
+        static public void PopulateMainMana(Party MainParty)
+        {
+
+            ClearMainMana();
+            for (int characterListIndex = 0; characterListIndex < MainParty.characterList.Count(); characterListIndex++)
+            {
+                char[] manaCharArray;
+                string manaString;
+                char[] manaMaxCharArray;
+                string manaMaxString;
+                manaString = MainParty.characterList[characterListIndex].mana.ToString();
+                manaCharArray = manaString.ToCharArray();
+                manaMaxString = MainParty.characterList[characterListIndex].manaMax.ToString();
+                manaMaxCharArray = manaMaxString.ToCharArray();
+                for (int manaArrayIndex = 0; manaArrayIndex < manaCharArray.Count(); manaArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (manaArrayIndex + 32)] = manaCharArray[manaArrayIndex];
+                }
+                for (int manaMaxArrayIndex = 0; manaMaxArrayIndex < manaMaxCharArray.Count(); manaMaxArrayIndex++)
+                {
+                    fightTemplate[(characterListIndex + 2), (manaMaxArrayIndex + 35)] = manaMaxCharArray[manaMaxArrayIndex];
+                }
+            }
+        }
+        static public void ClearMainMana()
+        {
+            for (int i = 2; i < 6; i++)
+            {
+                for (int j = 32; j < 34; j++)
+                {
+                    fightTemplate[i, j] = ' ';
+                }
+            }
+            for (int i = 2; i < 6; i++)
+            {
+                for (int j = 35; j < 27; j++)
+                {
+                    fightTemplate[i, j] = ' ';
                 }
             }
         }

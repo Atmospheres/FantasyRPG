@@ -21,11 +21,30 @@ namespace FantasyRPG
             intelligenceOnLevel = 1;
             pietyStart = 5;
             pietyOnLevel = 1;
-            KnownSkillList.Add("Stance");
-            KnownSkillList.Add("Cyclone");
-            KnownSkillList.Add("Bash");
-            KnownSkillList.Add("Guard");
-            KnownSkillList.Add("Bandage");
+            skillNameToList = "Stance";
+            skillToList = new Stance();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Cyclone";
+            skillToList = new Cyclone();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Bash";
+            skillToList = new Bash();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Guard";
+            skillToList = new Guard();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Bandage";
+            skillToList = new Bandage();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Charge";
+            skillToList = new Charge();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
         }
     }
 }

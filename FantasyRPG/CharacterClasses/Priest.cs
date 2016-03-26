@@ -21,13 +21,34 @@ namespace FantasyRPG
             intelligenceOnLevel = 3;
             pietyStart = 20;
             pietyOnLevel = 4;
-            KnownSkillList.Add("Cure");
-            KnownSkillList.Add("Bless");
-            KnownSkillList.Add("Cleanse");
-            KnownSkillList.Add("Protect");
-            KnownSkillList.Add("Holy");
-            KnownSkillList.Add("Pray");
-
+            skillNameToList = "Cure";
+            skillToList = new Cure();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Bless";
+            skillToList = new Bless();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Cleanse";
+            skillToList = new Cleanse();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Protect";
+            skillToList = new Protect();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "HolyBolt";
+            skillToList = new HolyBolt();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "holyNova";
+            skillToList = new HolyNova();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Pray";
+            skillToList = new Pray();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
         }
     }
 }

@@ -44,23 +44,48 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Battle.cs" />
-    <Compile Include="Character.cs" />
-    <Compile Include="CharacterClass.cs" />
+    <Compile Include="Skills\Charge.cs" />
+    <Compile Include="Skills\Bandage.cs" />
+    <Compile Include="Skills\Guard.cs" />
+    <Compile Include="Skills\Bash.cs" />
+    <Compile Include="Skills\Cyclone.cs" />
+    <Compile Include="Skills\Stance.cs" />
+    <Compile Include="Skills\Pray.cs" />
+    <Compile Include="Skills\Holy Bolt.cs" />
+    <Compile Include="Skills\Holy Nova.cs" />
+    <Compile Include="Skills\Protect.cs" />
+    <Compile Include="Skills\Cleanse.cs" />
+    <Compile Include="Skills\Bless.cs" />
+    <Compile Include="Skills\Cure.cs" />
+    <Compile Include="Skills\Volley.cs" />
+    <Compile Include="Skills\ConcussiveBarrage.cs" />
+    <Compile Include="Skills\ConcussiveShot.cs" />
+    <Compile Include="Skills\MendWound.cs" />
+    <Compile Include="Skills\ExplodingShot.cs" />
+    <Compile Include="Skills\AimedShot.cs" />
+    <Compile Include="Skills\Aspir.cs" />
+    <Compile Include="Characters\Character.cs" />
+    <Compile Include="CharacterClasses\CharacterClass.cs" />
     <Compile Include="CharacterClasses\Ranger.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="CharacterClasses\Fighter.cs" />
-    <Compile Include="FightScreen.cs" />
+    <Compile Include="Skills\Drain.cs" />
+    <Compile Include="Skills\Meditate.cs" />
+    <Compile Include="UserInterface\FightScreen.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="Item.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Skills\MagicBarrier.cs" />
+    <Compile Include="Skills\MagicBlast.cs" />
+    <Compile Include="Skills\MagicBolt.cs" />
+    <Compile Include="Skills\Skill.cs" />
     <Compile Include="NPC.cs" />
-    <Compile Include="Party.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Characters\Party.cs" />
+    <Compile Include="Characters\Player.cs" />
     <Compile Include="CharacterClasses\Priest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screen.cs" />
-    <Compile Include="ScreenTemplate.cs" />
+    <Compile Include="UserInterface\Screen.cs" />
+    <Compile Include="UserInterface\ScreenTemplate.cs" />
     <Compile Include="CharacterClasses\Wizard.cs" />
   </ItemGroup>
   <ItemGroup>

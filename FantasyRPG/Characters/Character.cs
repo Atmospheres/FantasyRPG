@@ -121,6 +121,23 @@ namespace FantasyRPG
             }
             responceString = name + " for " + damage;
         }
+        public void RecieveSkill(double Damage, int Element)
+        {
+            double damageMultiplier = CheckElement(Element);
+            double damage = Damage * damageMultiplier;
+            double currentArmor = armor;
+            if (currentArmor > damage)
+            {
+                currentArmor = damage;
+            }
+            damage -= currentArmor;
+            health -= damage;
+            if (health <= 0)
+            {
+                health = 0;
+            }
+            responceString = name + " for " + damage;
+        }
         public double CheckElement(int Element)
         {
             double damageMultiplier;

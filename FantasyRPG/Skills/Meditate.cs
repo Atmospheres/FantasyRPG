@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FantasyRPG
 {
-    class Input
+    class Meditate : Skill
     {
     }
 }

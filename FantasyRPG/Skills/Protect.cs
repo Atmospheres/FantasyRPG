@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace FantasyRPG
 {
-    class Player : Character
+    class Protect : Skill
     {
-        public Player(string Name)
-        {
-            name = Name;
-        }
-
     }
 }

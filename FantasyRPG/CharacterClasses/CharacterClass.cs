@@ -8,9 +8,14 @@ namespace FantasyRPG
 {
     public class CharacterClass
     {
-        public List<string> KnownSkillList = new List<string>();
+        public List<Skill> knownSkillList = new List<Skill>();
+        public List<string> skillNames = new List<string>();
         public List<string> subSkillList = new List<string>();
+        public Skill skillToList = new Skill();
+        public string skillNameToList;
+        public string skillCanTarget;
         public string className;
+        public int skillTargetStart;
         public int strengthStart = 0;
         public int strengthOnLevel = 0;
         public int constitutionStart = 0;
@@ -21,6 +26,7 @@ namespace FantasyRPG
         public int intelligenceOnLevel = 0;
         public int pietyStart = 0;
         public int pietyOnLevel = 0;
+
         public CharacterClass()
         {
 
@@ -29,34 +35,6 @@ namespace FantasyRPG
         public void ClearSubSkillList()
         {
             subSkillList.RemoveRange(0, subSkillList.Count());
-        }
-        public virtual void MoveOneOptions()
-        {
-
-        }
-        public virtual void MoveTwoOptions()
-        {
-
-        }
-        public virtual void MoveThreeOptions()
-        {
-
-        }
-        public virtual void MoveFourOptions()
-        {
-
-        }
-        public virtual void MoveFiveOptions()
-        {
-
-        }
-        public virtual void MoveSixOptions()
-        {
-
-        }
-        public virtual void MoveSevenOptions()
-        {
-
         }
     }
 }

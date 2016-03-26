@@ -23,19 +23,13 @@ namespace FantasyRPG
 
         public void StartBattle()
         {
+            screen.PopulateMainStats(battle.mainParty);
             FightScreen.PopulateFightScreen(screen.screenTemplate);
             FightScreen.AddEnemyInfo(enemyParty);
             FightScreen.PopulateSubNames(mainParty);
             FightScreen.PrintFightScreen();
-            battle.BattleSetup(mainParty, enemyParty);
-            while ((battle.mainParty.characterList[0].health + battle.mainParty.characterList[1].health + battle.mainParty.characterList[2].health + battle.mainParty.characterList[3].health) > 0 &&
-                (battle.enemyParty.characterList[0].health + battle.enemyParty.characterList[1].health + battle.enemyParty.characterList[2].health + battle.mainParty.characterList[3].health) > 0)
-            {
-                RefreshActiveFightScreen();
-                FightScreen.PrintFightScreen();
-                battle.Turn();
-            }
-
+            battle.BeginBattle(mainParty, enemyParty);
+            
         }
         public void RefreshActiveFightScreen()
         {

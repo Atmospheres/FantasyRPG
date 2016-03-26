@@ -22,54 +22,30 @@ namespace FantasyRPG
             intelligenceOnLevel = 4;
             pietyStart = 15;
             pietyOnLevel = 3;
-            KnownSkillList.Add("M. Bolt");
-            KnownSkillList.Add("M. Shield");
-            KnownSkillList.Add("Drain");
-            KnownSkillList.Add("Aspir");
-            KnownSkillList.Add("Meditate");
-        }
-
-        public override void MoveOneOptions()
-        {
-            ClearSubSkillList();
-            subSkillList.Add("Fire");
-            subSkillList.Add("Ice");
-            subSkillList.Add("Wind");
-            subSkillList.Add("Earth");
-            subSkillList.Add("Lightning");
-            subSkillList.Add("Water");
-        }
-
-        public override void MoveTwoOptions()
-        {
-            ClearSubSkillList();
-            subSkillList.Add("Fire");
-            subSkillList.Add("Ice");
-            subSkillList.Add("Wind");
-            subSkillList.Add("Earth");
-            subSkillList.Add("Lightning");
-            subSkillList.Add("Water");
-        }
-
-        public override void MoveThreeOptions()
-        {
-            ClearSubSkillList();
-        }
-        public override void MoveFourOptions()
-        {
-            ClearSubSkillList();
-        }
-        public override void MoveFiveOptions()
-        {
-            ClearSubSkillList();
-        }
-        public override void MoveSixOptions()
-        {
-            ClearSubSkillList();
-        }
-        public override void MoveSevenOptions()
-        {
-            ClearSubSkillList();
+            skillNameToList = "M. Bolt";
+            skillToList = new MagicBolt();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "M. Barrier";
+            skillToList = new MagicBarrier();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Mag. Blast";
+            skillToList = new MagicBlast();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Drain";
+            skillToList = new Drain();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Aspir";
+            skillToList = new Aspir();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
+            skillNameToList = "Meditate";
+            skillToList = new Meditate();
+            knownSkillList.Add(skillToList);
+            skillNames.Add(skillNameToList);
         }
     }
 }

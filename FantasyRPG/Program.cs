@@ -14,6 +14,7 @@ namespace FantasyRPG
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Game game = new Game();
             game.StartGame();
+            Console.ReadKey();
         }
     }
 }
