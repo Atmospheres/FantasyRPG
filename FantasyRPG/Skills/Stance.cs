@@ -8,16 +8,48 @@ namespace FantasyRPG
 {
     class Stance : Skill
     {
-
-     /*   public override void MoveOneOptions()
+        public Stance()
         {
-            ClearSubSkillList();
+            skillType = "Buff";
             skillCanTarget = "Self";
-            skillTargetStart = 1;
-            subSkillList.Add("Stance:");
+            cursorFourStart = 0;
+            subSkillType = "Stance:";
             subSkillList.Add("Neutral");
             subSkillList.Add("Aggressive");
-            subSkillList.Add("Defensive");
-        }*/
+            subSkillList.Add("Devfensive");
+            manaCost = 0;
+            typeInt = 0;
+        }
+        public override Party SkillEffect(Party MainParty, Party EnemyParty, int PlayerIndex)
+        {
+            double damage = 0;
+            typeInt = FightScreen.cursorSectionThree;
+            if (FightScreen.playerturn == true)
+            {
+                damage = dice.DFour() + (MainParty.characterList[PlayerIndex].intelligence / 5);
+                MainParty.characterList[PlayerIndex].DecreaseMana(manaCost);
+            }
+            else if (FightScreen.playerturn == false)
+            {
+                damage = dice.DFour() + (EnemyParty.characterList[PlayerIndex].intelligence / 5);
+                EnemyParty.characterList[PlayerIndex].DecreaseMana(manaCost);
+            }
+            if (FightScreen.cursorSectionFour == 9)
+            {
+                for (int i = 0; i < MainParty.characterList.Count(); i++)
+                {
+                    MainParty.characterList[i].RecieveAttack(damage, typeInt);
+                }
+            }
+            else if (FightScreen.cursorSectionFour == 10)
+            {
+                for (int i = 0; i < MainParty.characterList.Count(); i++)
+                {
+                    EnemyParty.characterList[i].RecieveAttack(damage, typeInt);
+                }
+            }
+            GroupParties(MainParty, EnemyParty);
+            return tempParty;
+        }
     }
 }

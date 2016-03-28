@@ -44,33 +44,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Battle.cs" />
-    <Compile Include="Skills\Charge.cs" />
-    <Compile Include="Skills\Bandage.cs" />
-    <Compile Include="Skills\Guard.cs" />
     <Compile Include="Skills\Bash.cs" />
     <Compile Include="Skills\Cyclone.cs" />
     <Compile Include="Skills\Stance.cs" />
-    <Compile Include="Skills\Pray.cs" />
     <Compile Include="Skills\Holy Bolt.cs" />
     <Compile Include="Skills\Holy Nova.cs" />
-    <Compile Include="Skills\Protect.cs" />
-    <Compile Include="Skills\Cleanse.cs" />
-    <Compile Include="Skills\Bless.cs" />
-    <Compile Include="Skills\Cure.cs" />
     <Compile Include="Skills\Volley.cs" />
-    <Compile Include="Skills\ConcussiveBarrage.cs" />
-    <Compile Include="Skills\ConcussiveShot.cs" />
-    <Compile Include="Skills\MendWound.cs" />
     <Compile Include="Skills\ExplodingShot.cs" />
     <Compile Include="Skills\AimedShot.cs" />
-    <Compile Include="Skills\Aspir.cs" />
     <Compile Include="Characters\Character.cs" />
     <Compile Include="CharacterClasses\CharacterClass.cs" />
     <Compile Include="CharacterClasses\Ranger.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="CharacterClasses\Fighter.cs" />
     <Compile Include="Skills\Drain.cs" />
-    <Compile Include="Skills\Meditate.cs" />
     <Compile Include="UserInterface\FightScreen.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Items\Item.cs" />

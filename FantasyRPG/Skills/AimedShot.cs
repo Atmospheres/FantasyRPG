@@ -9,20 +9,40 @@ namespace FantasyRPG
     class AimedShot : Skill
 
     {
-        
-        string skillCanTarget;
-        int cursorFourStart;
-
-
-
         public AimedShot()
         {
+            skillType = "Attack";
             skillCanTarget = "Enemy";
-            cursorFourStart = 5; 
+            cursorFourStart = 5;
+            manaCost = 5;
+            typeInt = 0;
+            subSkillType = "None";
         }
-        public virtual void SkillEffect()
+        public override Party SkillEffect(Party MainParty, Party EnemyParty, int PlayerIndex)
         {
-
+            double damage = 0;
+            typeInt = FightScreen.cursorSectionThree;
+            if (FightScreen.playerturn == true)
+            {
+                damage = dice.DTen() + (MainParty.characterList[PlayerIndex].dexterity / 5);
+                MainParty.characterList[PlayerIndex].DecreaseMana(manaCost);
+            }
+            else if (FightScreen.playerturn == false)
+            {
+                damage = dice.DTen() + (EnemyParty.characterList[PlayerIndex].dexterity / 5);
+                EnemyParty.characterList[PlayerIndex].DecreaseMana(manaCost);
+            }
+            if (FightScreen.cursorSectionFour < 5)
+            {
+                MainParty.characterList[FightScreen.cursorSectionFour - 1].RecieveAttack(damage, typeInt);
+            }
+            else if (FightScreen.cursorSectionFour > 4)
+            {
+                EnemyParty.characterList[FightScreen.cursorSectionFour - 5].RecieveAttack(damage, typeInt);
+            }
+            GroupParties(MainParty, EnemyParty);
+            return tempParty;
         }
     }
 }
+

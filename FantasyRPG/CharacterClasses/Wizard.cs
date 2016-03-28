@@ -26,24 +26,12 @@ namespace FantasyRPG
             skillToList = new MagicBolt();
             knownSkillList.Add(skillToList);
             skillNames.Add(skillNameToList);
-            skillNameToList = "M. Barrier";
-            skillToList = new MagicBarrier();
-            knownSkillList.Add(skillToList);
-            skillNames.Add(skillNameToList);
+            // skillNameToList = "M. Barrier";
+            // skillToList = new MagicBarrier();
+            // knownSkillList.Add(skillToList);
+            // skillNames.Add(skillNameToList);
             skillNameToList = "Mag. Blast";
             skillToList = new MagicBlast();
-            knownSkillList.Add(skillToList);
-            skillNames.Add(skillNameToList);
-            skillNameToList = "Drain";
-            skillToList = new Drain();
-            knownSkillList.Add(skillToList);
-            skillNames.Add(skillNameToList);
-            skillNameToList = "Aspir";
-            skillToList = new Aspir();
-            knownSkillList.Add(skillToList);
-            skillNames.Add(skillNameToList);
-            skillNameToList = "Meditate";
-            skillToList = new Meditate();
             knownSkillList.Add(skillToList);
             skillNames.Add(skillNameToList);
         }

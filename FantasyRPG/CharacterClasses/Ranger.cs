@@ -29,22 +29,10 @@ namespace FantasyRPG
             skillToList = new ExplodingShot();
             knownSkillList.Add(skillToList);
             skillNames.Add(skillNameToList);
-            skillNameToList = "Stun Shot";
-            skillToList = new ConcussiveShot();
-            knownSkillList.Add(skillToList);
-            skillNames.Add(skillNameToList);
-            skillNameToList = "Stun Barrage";
-            skillToList = new ConcussiveBarrage();
-            knownSkillList.Add(skillToList);
-            skillNames.Add(skillNameToList);
-            skillNameToList = "Volley";
-            skillToList = new Volley();
-            knownSkillList.Add(skillToList);
-            skillNames.Add(skillNameToList);
-            skillNameToList = "Mend Wound";
-            skillToList = new MendWound();
-            knownSkillList.Add(skillToList);
-            skillNames.Add(skillNameToList);
+            //skillNameToList = "Volley";
+            //skillToList = new Volley();
+            //knownSkillList.Add(skillToList);
+            //skillNames.Add(skillNameToList);
         }
     }
 }

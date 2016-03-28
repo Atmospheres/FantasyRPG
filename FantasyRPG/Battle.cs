@@ -10,6 +10,7 @@ namespace FantasyRPG
     {
         public Party mainParty = new Party();
         public Party enemyParty = new Party();
+        public Party tempParty = new Party();
         bool playerTurn = true;
 
         public Battle()
@@ -55,11 +56,12 @@ namespace FantasyRPG
                             FightScreen.AddEnemyInfo(enemyParty);
                             FightScreen.cursorSectionOne = 1;
                             FightScreen.PrintFightScreen();
-                            SelectAction(mainParty.characterList[playerIndex]);
+                            SelectAction(mainParty.characterList[playerIndex], playerIndex);
                             CheckDeath();
                         }
                     }
                 }
+                FightScreen.playerturn = false;
             }
             else if (playerTurn == false && (enemyParty.characterList[0].health + enemyParty.characterList[1].health + enemyParty.characterList[2].health + mainParty.characterList[3].health) > 0)
             {
@@ -70,6 +72,7 @@ namespace FantasyRPG
 
                     }  
                 }
+                FightScreen.playerturn = true;
             }
         }
         public void CheckDeath()
@@ -101,7 +104,19 @@ namespace FantasyRPG
         {
             FightScreen.PopulateSectionThree(Player.characterClass.knownSkillList[(FightScreen.cursorSectionTwo - 1)].subSkillList, Player.characterClass.knownSkillList[(FightScreen.cursorSectionTwo - 1)].subSkillType);
         }
-        public void SelectAction(Character Player)
+        public void SplitTempParty(Party TempParty)
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                mainParty.characterList[i] = TempParty.characterList[i];
+            }
+            for (int i = 4; i < TempParty.characterList.Count(); i++)
+            {
+                enemyParty.characterList[i-4] = TempParty.characterList[i];
+            }
+
+        }
+        public void SelectAction(Character Player, int PlayerIndex)
         {
             FightScreen.activeCursor = 1;
             FightScreen.lastCursor = 0;
@@ -113,310 +128,263 @@ namespace FantasyRPG
                 {
                     while (FightScreen.activeCursor == 1)
                     {
-                        if (FightScreen.keyInput == ConsoleKey.UpArrow)
-                        {
-                            FightScreen.MoveCursorOneUp();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.DownArrow)
-                        {
-                            FightScreen.MoveCursorOneDown();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.Enter)
-                        {
-                            if (FightScreen.cursorSectionOne == 1)
-                            {
-                                FightScreen.activeCursor = 4;
-                                FightScreen.lastCursor = 1;
-                                FightScreen.cursorSectionFour = 5;
-                                FightScreen.PrintFightScreen();
-                                FightScreen.keyInput = Console.ReadKey(true).Key;
-                            }
-                            else if (FightScreen.cursorSectionOne == 2)
-                            {
-                                FightScreen.activeCursor = 0;
-                                FightScreen.lastCursor = 1;
-                                FightScreen.PrintFightScreen();
-                                FightScreen.keyInput = Console.ReadKey(true).Key;
-                                Player.Defend();
-                            }
-                            else if (FightScreen.cursorSectionOne == 3)
-                            {
-                                FightScreen.activeCursor = 2;
-                                FightScreen.lastCursor = 1;
-                                FightScreen.cursorSectionTwo = 1;
-                                FightScreen.ClearSectionTwo();
-                                FightScreen.sectionTwoLength = Player.characterClass.knownSkillList.Count();
-                                FightScreen.PopulateSectionTwoSkills(Player.characterClass.skillNames);
-                                FightScreen.PrintFightScreen();
-                                FightScreen.keyInput = Console.ReadKey(true).Key;
-                            }
-                            else if (FightScreen.cursorSectionOne == 4)
-                            {
-                                FightScreen.activeCursor = 2;
-                                FightScreen.lastCursor = 1;
-                                FightScreen.ClearSectionTwo();
-                                FightScreen.sectionTwoLength = mainParty.inventoryNames.Count();
-                                FightScreen.PopulateSectionTwoItems(mainParty.inventoryNames);
-                                FightScreen.cursorSectionTwo = 1;
-                                FightScreen.PrintFightScreen();
-                                FightScreen.keyInput = Console.ReadKey(true).Key;
-                            }
-                        }
-                        else
-                        {
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
+                        UseCursorOne(Player);
                     }
                 }
                 if(FightScreen.activeCursor ==2)
                 {
                     while (FightScreen.activeCursor == 2)
                      {
-                        if (FightScreen.keyInput == ConsoleKey.UpArrow)
-                        {
-                            FightScreen.MoveCursorTwoUp();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.DownArrow)
-                        {
-                            FightScreen.MoveCursorTwoDown();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.Enter)
-                        {
-                            SetThreeOptions(Player);
-                            FightScreen.sectionThreeLength = Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].subSkillList.Count();
-                            if (FightScreen.sectionThreeLength > 0)
-                            {
-                                FightScreen.activeCursor = 3;
-                                FightScreen.lastCursor = 2;
-                                FightScreen.PopulateSectionThree(Player.characterClass.subSkillList, Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo -1].subSkillType);
-                                FightScreen.cursorSectionThree = 1;
-                                FightScreen.PrintFightScreen();
-                                FightScreen.keyInput = Console.ReadKey(true).Key;
-                            }
-                            else
-                            {
-                                FightScreen.activeCursor = 4;
-                                FightScreen.lastCursor = 2;
-                                FightScreen.cursorSectionFour = Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo -1].cursorFourStart;
-                                FightScreen.PrintFightScreen();
-                                FightScreen.keyInput = Console.ReadKey(true).Key;
-                            }
-
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.Spacebar)
-                        {
-                            FightScreen.ClearSectionTwo();
-                            FightScreen.cursorSectionTwo = 0;
-                            FightScreen.PrintFightScreen();
-                            FightScreen.activeCursor = 1;
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else
-                        {
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
+                        UseCursorTwo(Player);
                     }
                 }
                 if(FightScreen.activeCursor == 3)
                 {
                     while (FightScreen.activeCursor == 3)
                     {
-                        if (FightScreen.keyInput == ConsoleKey.UpArrow)
-                        {
-                            FightScreen.MoveCursorThreeUp();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.DownArrow)
-                        {
-                            FightScreen.MoveCursorThreeDown();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.Enter)
-                        {
-                            FightScreen.cursorSectionFour = Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo -1].cursorFourStart;
-                            FightScreen.PrintFightScreen();
-                            FightScreen.activeCursor = 4;
-                            FightScreen.lastCursor = 3;
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.Spacebar)
-                        {
-                            FightScreen.ClearSectionThree(); 
-                            FightScreen.cursorSectionThree = 0;
-                            FightScreen.PrintFightScreen();
-                            FightScreen.activeCursor = 2;
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else
-                        {
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
+                        UseCursorThree(Player);
                     }
                 }
                 if(FightScreen.activeCursor == 4)
                 {
                     while (FightScreen.activeCursor == 4)
                     {
-                        if (FightScreen.keyInput == ConsoleKey.UpArrow)
-                        {
-                            FightScreen.MoveCursorFourUp();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.DownArrow)
-                        {
-                            FightScreen.MoveCursorFourDown();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.LeftArrow)
-                        {
-                            FightScreen.MoveCursorFourLeft();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.RightArrow)
-                        {
-                            FightScreen.MoveCursorFourRight();
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.Enter)
-                        {
-                            if (FightScreen.cursorSectionOne == 1)
-                            {
-                                if (FightScreen.cursorSectionFour > 4)
-                                {
-                                    int element = 0;
-                                    enemyParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveAttack(Player.Attack(), element);
-                                    ResetCursors();
-                                    FightScreen.AddEnemyInfo(enemyParty);
-                                    FightScreen.PrintFightScreen();
-                                    FightScreen.activeCursor = 0;
-                                }
-                                else if (FightScreen.cursorSectionFour < 5)
-                                {
-                                    int element = 0;
-                                    mainParty.characterList[(FightScreen.cursorSectionFour - 1)].RecieveAttack(Player.Attack(), element);
-                                    ResetCursors();
-                                    FightScreen.AddEnemyInfo(enemyParty);
-                                    FightScreen.PrintFightScreen();
-                                    FightScreen.activeCursor = 0;
-                                }
-                            }
-                            else if (FightScreen.cursorSectionOne == 3)
-                            {
-                                if (Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].skillCanTarget == "Enemy")
-                                {
-                                    enemyParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].typeInt);
-                                }
-                                else if (Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].skillCanTarget == "Ally")
-                                {
-                                    mainParty.characterList[(FightScreen.cursorSectionFour)].RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].typeInt);
-
-                                }
-                                else if (Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].skillCanTarget == "Self")
-                                {
-                                    Player.RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].typeInt);
-
-                                }
-                                else if (Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].skillCanTarget == "Any")
-                                {
-                                    if (FightScreen.cursorSectionFour > 4)
-                                    {
-                                        enemyParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo].typeInt);
-
-                                    }
-                                    if (FightScreen.cursorSectionFour < 5)
-                                    {
-                                        mainParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo].typeInt);
-
-                                    }
-                                }
-
-                                else if (Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].skillCanTarget == "EnemyTeam")
-                                {
-                                    for (int i = 0; i < enemyParty.characterList.Count(); i++)
-                                    {
-                                        enemyParty.characterList[i].RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo].typeInt);
-                                    }
-
-                                }
-                                else if (Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].skillCanTarget == "AllyTeam")
-                                {
-                                    for (int i = 0; i < enemyParty.characterList.Count(); i++)
-                                    {
-                                        mainParty.characterList[i].RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo].typeInt);
-                                    }
-
-                                }
-                                else if (Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].skillCanTarget == "AnyTeam")
-                                {
-                                    if (FightScreen.cursorSectionFour == 9)
-                                    {
-                                        for (int i = 0; i < enemyParty.characterList.Count(); i++)
-                                        {
-                                            mainParty.characterList[i].RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo].typeInt);
-                                        }
-
-                                    }
-                                    else if (FightScreen.cursorSectionFour == 10)
-                                    {
-                                        for (int i = 0; i < enemyParty.characterList.Count(); i++)
-                                        {
-                                            enemyParty.characterList[i].RecieveSkill(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(Player), Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo].typeInt);
-                                        }
-
-
-                                    }
-
-                                }
-                                
-                                Player.DecreaseMana(Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].manaCost);
-                                ResetCursors();
-                                FightScreen.ClearSectionTwo();
-                                FightScreen.ClearSectionThree();
-                                FightScreen.AddEnemyInfo(enemyParty);
-                                FightScreen.PrintFightScreen();
-                                FightScreen.keyInput = ConsoleKey.Clear;
-                                FightScreen.activeCursor = 0;
-                            }
-                            else if (FightScreen.cursorSectionOne == 4)
-                            {
-                                /* Items */
-                                FightScreen.activeCursor = 0;
-                            }
-
-                        }
-                        else if (FightScreen.keyInput == ConsoleKey.Spacebar)
-                        {
-                            FightScreen.cursorSectionFour = 0;
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = ConsoleKey.Clear;
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                            FightScreen.activeCursor = FightScreen.lastCursor;
-                        }
-                        else
-                        {
-                            FightScreen.PrintFightScreen();
-                            FightScreen.keyInput = ConsoleKey.Clear;
-                            FightScreen.keyInput = Console.ReadKey(true).Key;
-                        }
+                        UseCursorFour(Player, PlayerIndex);
                     }
                 }
+            }
+        }
+
+        public void UseCursorOne(Character Player)
+        {
+            if (FightScreen.keyInput == ConsoleKey.UpArrow)
+            {
+                FightScreen.MoveCursorOneUp();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.DownArrow)
+            {
+                FightScreen.MoveCursorOneDown();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.Enter)
+            {
+                if (FightScreen.cursorSectionOne == 1)
+                {
+                    FightScreen.activeCursor = 4;
+                    FightScreen.lastCursor = 1;
+                    FightScreen.cursorSectionFour = 5;
+                    FightScreen.PrintFightScreen();
+                    FightScreen.keyInput = Console.ReadKey(true).Key;
+                }
+                else if (FightScreen.cursorSectionOne == 2)
+                {
+                    FightScreen.activeCursor = 0;
+                    FightScreen.lastCursor = 1;
+                    FightScreen.PrintFightScreen();
+                    FightScreen.keyInput = Console.ReadKey(true).Key;
+                    Player.Defend();
+                }
+                else if (FightScreen.cursorSectionOne == 3)
+                {
+                    FightScreen.activeCursor = 2;
+                    FightScreen.lastCursor = 1;
+                    FightScreen.cursorSectionTwo = 1;
+                    FightScreen.ClearSectionTwo();
+                    FightScreen.sectionTwoLength = Player.characterClass.knownSkillList.Count();
+                    FightScreen.PopulateSectionTwoSkills(Player.characterClass.skillNames);
+                    FightScreen.PrintFightScreen();
+                    FightScreen.keyInput = Console.ReadKey(true).Key;
+                }
+                else if (FightScreen.cursorSectionOne == 4)
+                {
+                    FightScreen.activeCursor = 2;
+                    FightScreen.lastCursor = 1;
+                    FightScreen.ClearSectionTwo();
+                    FightScreen.sectionTwoLength = mainParty.inventoryNames.Count();
+                    FightScreen.PopulateSectionTwoItems(mainParty.inventoryNames);
+                    FightScreen.cursorSectionTwo = 1;
+                    FightScreen.PrintFightScreen();
+                    FightScreen.keyInput = Console.ReadKey(true).Key;
+                }
+            }
+            else
+            {
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+        }
+        public void UseCursorTwo(Character Player)
+        {
+            if (FightScreen.keyInput == ConsoleKey.UpArrow)
+            {
+                FightScreen.MoveCursorTwoUp();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.DownArrow)
+            {
+                FightScreen.MoveCursorTwoDown();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.Enter)
+            {
+                SetThreeOptions(Player);
+                FightScreen.sectionThreeLength = Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].subSkillList.Count();
+                if (FightScreen.sectionThreeLength > 0)
+                {
+                    FightScreen.activeCursor = 3;
+                    FightScreen.lastCursor = 2;
+                    FightScreen.PopulateSectionThree(Player.characterClass.subSkillList, Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].subSkillType);
+                    FightScreen.cursorSectionThree = 1;
+                    FightScreen.PrintFightScreen();
+                    FightScreen.keyInput = Console.ReadKey(true).Key;
+                }
+                else
+                {
+                    FightScreen.activeCursor = 4;
+                    FightScreen.lastCursor = 2;
+                    FightScreen.cursorSectionFour = Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].cursorFourStart;
+                    FightScreen.PrintFightScreen();
+                    FightScreen.keyInput = Console.ReadKey(true).Key;
+                }
+
+            }
+            else if (FightScreen.keyInput == ConsoleKey.Spacebar)
+            {
+                FightScreen.ClearSectionTwo();
+                FightScreen.cursorSectionTwo = 0;
+                FightScreen.PrintFightScreen();
+                FightScreen.activeCursor = 1;
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else
+            {
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+        }
+        public void UseCursorThree(Character Player)
+        {
+            if (FightScreen.keyInput == ConsoleKey.UpArrow)
+            {
+                FightScreen.MoveCursorThreeUp();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.DownArrow)
+            {
+                FightScreen.MoveCursorThreeDown();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.Enter)
+            {
+                FightScreen.cursorSectionFour = Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo -1].cursorFourStart;
+                FightScreen.PrintFightScreen();
+                FightScreen.activeCursor = 4;
+                FightScreen.lastCursor = 3;
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.Spacebar)
+            {
+                FightScreen.ClearSectionThree(); 
+                FightScreen.cursorSectionThree = 0;
+                FightScreen.PrintFightScreen();
+                FightScreen.activeCursor = 2;
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else
+            {
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+        }
+        public void UseCursorFour(Character Player, int PlayerIndex)
+        {
+            if (FightScreen.keyInput == ConsoleKey.UpArrow)
+            {
+                FightScreen.MoveCursorFourUp();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.DownArrow)
+            {
+                FightScreen.MoveCursorFourDown();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.LeftArrow)
+            {
+                FightScreen.MoveCursorFourLeft();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.RightArrow)
+            {
+                FightScreen.MoveCursorFourRight();
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+            }
+            else if (FightScreen.keyInput == ConsoleKey.Enter)
+            {
+                if (FightScreen.cursorSectionOne == 1)
+                {
+                    if (FightScreen.cursorSectionFour > 4)
+                    {
+                        int element = 0;
+                        this.enemyParty.characterList[(FightScreen.cursorSectionFour - 5)].RecieveAttack(Player.Attack(), element);
+                        ResetCursors();
+                        FightScreen.AddEnemyInfo(this.enemyParty);
+                        FightScreen.PrintFightScreen();
+                        FightScreen.activeCursor = 0;
+                    }
+                    else if (FightScreen.cursorSectionFour < 5)
+                    {
+                        int element = 0;
+                        mainParty.characterList[(FightScreen.cursorSectionFour - 1)].RecieveAttack(Player.Attack(), element);
+                        ResetCursors();
+                        FightScreen.AddEnemyInfo(this.enemyParty);
+                        FightScreen.PrintFightScreen();
+                        FightScreen.activeCursor = 0;
+                    }
+                }
+                else if (FightScreen.cursorSectionOne == 3)
+                {
+
+                    tempParty = Player.characterClass.knownSkillList[FightScreen.cursorSectionTwo - 1].SkillEffect(mainParty, enemyParty, PlayerIndex);
+                    SplitTempParty(tempParty);
+                    ResetCursors();
+                    FightScreen.ClearSectionTwo();
+                    FightScreen.ClearSectionThree();
+                    FightScreen.AddEnemyInfo(this.enemyParty);
+                    FightScreen.PrintFightScreen();
+                    FightScreen.keyInput = ConsoleKey.Clear;
+                    FightScreen.activeCursor = 0;
+                }
+                else if (FightScreen.cursorSectionOne == 4)
+                {
+                    /* Items */
+                    FightScreen.activeCursor = 0;
+                }
+
+            }
+            else if (FightScreen.keyInput == ConsoleKey.Spacebar)
+            {
+                FightScreen.cursorSectionFour = 0;
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = ConsoleKey.Clear;
+                FightScreen.keyInput = Console.ReadKey(true).Key;
+                FightScreen.activeCursor = FightScreen.lastCursor;
+            }
+            else
+            {
+                FightScreen.PrintFightScreen();
+                FightScreen.keyInput = ConsoleKey.Clear;
+                FightScreen.keyInput = Console.ReadKey(true).Key;
             }
         }
     }

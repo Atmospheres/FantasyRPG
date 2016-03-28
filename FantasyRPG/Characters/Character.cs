@@ -114,7 +114,8 @@ namespace FantasyRPG
                 currentArmor = damage;
             }
             damage -= currentArmor;
-            health -= damage;
+            int damageInt = Convert.ToInt32(damage);
+            health -= damageInt;
             if(health <= 0)
             {
                 health = 0;
@@ -294,10 +295,18 @@ namespace FantasyRPG
         public void IncreaseMana(int ManaGain)
         {
             mana += ManaGain;
+            if(mana > manaMax)
+            {
+                mana = manaMax;
+            }
         }
         public void DecreaseMana(int ManaLoss)
         {
             mana -= ManaLoss;
+            if(mana < 0)
+            {
+                mana = 0;
+            }
         }
         public void RecieveHeal(double HealthGain)
         {

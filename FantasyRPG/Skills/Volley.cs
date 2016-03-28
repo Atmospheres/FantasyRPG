@@ -8,5 +8,44 @@ namespace FantasyRPG
 {
     class Volley : Skill
     {
+        public Volley()
+        {
+            skillType = "Attack";
+            skillCanTarget = "EnemyTeam";
+            cursorFourStart = 10;
+            manaCost = 10;
+            typeInt = 0;
+        }
+        public override Party SkillEffect(Party MainParty, Party EnemyParty, int PlayerIndex)
+        {
+            double damage = 0;
+            typeInt = FightScreen.cursorSectionThree;
+            if (FightScreen.playerturn == true)
+            {
+                damage = dice.DFour() + (MainParty.characterList[PlayerIndex].intelligence / 5);
+                MainParty.characterList[PlayerIndex].DecreaseMana(manaCost);
+            }
+            else if (FightScreen.playerturn == false)
+            {
+                damage = dice.DFour() + (EnemyParty.characterList[PlayerIndex].intelligence / 5);
+                EnemyParty.characterList[PlayerIndex].DecreaseMana(manaCost);
+            }
+            if (FightScreen.cursorSectionFour == 9)
+            {
+                for (int i = 0; i < MainParty.characterList.Count(); i++)
+                {
+                    MainParty.characterList[i].RecieveAttack(damage, typeInt);
+                }
+            }
+            else if (FightScreen.cursorSectionFour == 10)
+            {
+                for (int i = 0; i < MainParty.characterList.Count(); i++)
+                {
+                    EnemyParty.characterList[i].RecieveAttack(damage, typeInt);
+                }
+            }
+            GroupParties(MainParty, EnemyParty);
+            return tempParty;
+        }
     }
 }

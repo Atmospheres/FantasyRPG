@@ -16,6 +16,7 @@ namespace FantasyRPG
         public static int cursorSectionFour = 0;
         public static int activeCursor = 1;
         public static int lastCursor = 0;
+        public static bool playerturn = true;
         public static ConsoleKey keyInput = Console.ReadKey(true).Key;
         static public char[,] fightTemplate = new char[48, 64];
 
@@ -154,20 +155,23 @@ namespace FantasyRPG
         }
         static public void PopulateSectionThree(List<string> SubSkillList, string Type)
         {
-            char[] typeCharArray;
-            typeCharArray = Type.ToCharArray();
-            for (int typeArrayIndex = 0; typeArrayIndex < typeCharArray.Length; typeArrayIndex++)
+            if (Type != "None")
             {
-                fightTemplate[19, (typeArrayIndex + 2)] = typeCharArray[typeArrayIndex];
-            }
-            int optionsLength = SubSkillList.Count();
-            for (int subSkillListIndex = 0; subSkillListIndex < optionsLength; subSkillListIndex++)
-            {
-                char[] subSkillCharArray;
-                subSkillCharArray = SubSkillList[subSkillListIndex].ToCharArray();
-                for (int subSkillArrayIndex = 0; subSkillArrayIndex < subSkillCharArray.Count(); subSkillArrayIndex++)
+                char[] typeCharArray;
+                typeCharArray = Type.ToCharArray();
+                for (int typeArrayIndex = 0; typeArrayIndex < typeCharArray.Length; typeArrayIndex++)
                 {
-                    fightTemplate[(subSkillListIndex + 20), (subSkillArrayIndex + 2)] = subSkillCharArray[subSkillArrayIndex];
+                    fightTemplate[19, (typeArrayIndex + 2)] = typeCharArray[typeArrayIndex];
+                }
+                int optionsLength = SubSkillList.Count();
+                for (int subSkillListIndex = 0; subSkillListIndex < optionsLength; subSkillListIndex++)
+                {
+                    char[] subSkillCharArray;
+                    subSkillCharArray = SubSkillList[subSkillListIndex].ToCharArray();
+                    for (int subSkillArrayIndex = 0; subSkillArrayIndex < subSkillCharArray.Count(); subSkillArrayIndex++)
+                    {
+                        fightTemplate[(subSkillListIndex + 20), (subSkillArrayIndex + 2)] = subSkillCharArray[subSkillArrayIndex];
+                    }
                 }
             }
         }
